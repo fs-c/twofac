@@ -1,6 +1,9 @@
 import { config as configure } from 'dotenv';
 configure();
 
+import * as logger from 'debug';
+const debug = logger('server');
+
 import * as Koa from 'koa';
 import { join } from 'path';
 
@@ -9,8 +12,8 @@ const app = new Koa();
 app.proxy = true;
 app.keys = [ process.env.SESSION_SECRET ];
 
-import * as logger from 'koa-logger';
-app.use(logger());
+import * as log from 'koa-logger';
+app.use(log());
 
 import * as compress from 'koa-compress';
 app.use(compress());
@@ -19,6 +22,9 @@ import * as session from 'koa-session';
 import * as bodyParser from 'koa-bodyparser';
 app.use(bodyParser());
 app.use(session({}, app));
+
+import flash from './middleware/flash';
+app.use(flash());
 
 import * as serve from 'koa-static';
 app.use(serve(join(__dirname, '/public')));
@@ -43,3 +49,16 @@ app.use(router.allowedMethods());
 
 const port = parseInt(process.env.PORT, 10) || 8080;
 export const server = app.listen(port);
+debug('server listening on %o', port);
+
+import * as mongoose from 'mongoose';
+
+const { DB_URL, DB_PASS, DB_USER } = process.env;
+
+if (DB_URL && DB_PASS && DB_USER) {
+  mongoose.connect(`mongodb://${DB_USER}:${DB_PASS}@${DB_URL}`)
+    .then(() => debug('connected to database'))
+    .catch((err) => debug('database connection error: %O', err.message));
+} else {
+  throw new Error('Missing database connection parameters.');
+}
