@@ -35,3 +35,7 @@ router.get('/', async (ctx, next) => {
 import userActions from './routes/userActions';
 router.use(userActions.routes());
 router.use(userActions.allowedMethods());
+
+import shasecActions from './routes/shasecActions';
+router.use(shasecActions.routes());
+router.use(shasecActions.allowedMethods());
