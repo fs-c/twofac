@@ -26,6 +26,10 @@ app.use(session({}, app));
 import flash from './middleware/flash';
 app.use(flash());
 
+import passport from './auth';
+app.use(passport.initialize());
+app.use(passport.session());
+
 import * as serve from 'koa-static';
 app.use(serve(join(__dirname, '/public')));
 
@@ -41,6 +45,19 @@ app.use(async (ctx, next) => {
       },
     },
   )(ctx, next);
+});
+
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    app.emit('error', err); // Preserve default behavior.
+
+    ctx.status = ctx.status || 500;
+    await ctx.render('status', {
+      message: err.message,
+    });
+  }
 });
 
 import router from './router';
