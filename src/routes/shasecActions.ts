@@ -31,18 +31,24 @@ router.post('/add', ifLoggedOn, async (ctx, next) => {
 
   const { user } = ctx.state;
 
+  for (const secret of user.sharedSecrets) {
+    if (secret.alias === alias) {
+      return ctx.throw(new Error('Aliases must be unique.'));
+    }
+  }
+
   user.sharedSecrets.push(new SharedSecret({ alias, string: sharedSecret }));
   await user.save();
 
   await ctx.render('status', { status: 'success', message: 'Added shasec.' });
 });
 
-router.get('/delete/:key', ifLoggedOn, async (ctx, next) => {
+router.get('/delete/:alias', ifLoggedOn, async (ctx, next) => {
   const { user } = ctx.state;
-  const { key } = ctx.params;
+  const { alias } = ctx.params;
 
   for (const secret of user.sharedSecrets) {
-    if (secret.string === key) {
+    if (secret.alias === alias) {
       secret.remove();
       await user.save();
       return await ctx.render('status', {
