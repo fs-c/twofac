@@ -37,5 +37,5 @@ router.use(userActions.routes());
 router.use(userActions.allowedMethods());
 
 import shasecActions from './routes/shasecActions';
-router.use(shasecActions.routes());
-router.use(shasecActions.allowedMethods());
+router.use('/secret', shasecActions.routes());
+router.use('/secret', shasecActions.allowedMethods());
