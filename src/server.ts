@@ -48,6 +48,22 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
+  ctx.success = async (data: any) => {
+    let obj: any = { status: 'success' };
+
+    if (typeof data === 'string') {
+      obj.message = data;
+    } else {
+      obj = data;
+    }
+
+    return await ctx.render('status', obj);
+  };
+
+  await next();
+});
+
+app.use(async (ctx, next) => {
   try {
     await next();
   } catch (err) {

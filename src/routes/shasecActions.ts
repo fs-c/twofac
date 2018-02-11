@@ -16,10 +16,7 @@ router.post('/generate', async (ctx, next) => {
 
   const code = generate(sharedSecret);
 
-  return await ctx.render('status', {
-    status: 'success',
-    message: 'Generated code: ' + code,
-  });
+  return await ctx.success('Generated code: ' + code);
 });
 
 router.post('/add', ifLoggedOn, async (ctx, next) => {
@@ -40,7 +37,7 @@ router.post('/add', ifLoggedOn, async (ctx, next) => {
   user.sharedSecrets.push(new SharedSecret({ alias, string: sharedSecret }));
   await user.save();
 
-  await ctx.render('status', { status: 'success', message: 'Added shasec.' });
+  await ctx.success('Added shasec.');
 });
 
 router.get('/delete/:alias', ifLoggedOn, async (ctx, next) => {
@@ -51,10 +48,8 @@ router.get('/delete/:alias', ifLoggedOn, async (ctx, next) => {
     if (secret.alias === alias) {
       secret.remove();
       await user.save();
-      return await ctx.render('status', {
-        status: 'success',
-        message: 'Removed secret',
-      });
+
+      return await ctx.success('Removed secret.');
     }
   }
 
