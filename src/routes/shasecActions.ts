@@ -40,4 +40,17 @@ router.post('/add', ifLoggedOn, async (ctx, next) => {
 router.get('/delete/:key', ifLoggedOn, async (ctx, next) => {
   const { user } = ctx.state;
   const { key } = ctx.params;
+
+  for (const secret of user.sharedSecrets) {
+    if (secret.string === key) {
+      secret.remove();
+      await user.save();
+      return await ctx.render('status', {
+        status: 'success',
+        message: 'Removed secret',
+      });
+    }
+  }
+
+  ctx.throw(new Error('Secret not found.'));
 });
