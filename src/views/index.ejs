@@ -1,1 +1,27 @@
-priv
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('partials/head') %>
+    
+    <title>twofac</title>
+
+    <style>
+      .container { margin-top: 1em; }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="twelve columns">
+          <p>
+            Welcome, <b><%= user.nickname %></b>.
+            <span class="u-pull-right">
+              <a href="logout">Log out.</a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
