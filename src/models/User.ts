@@ -1,5 +1,15 @@
 import { Document, Schema, Model, model } from 'mongoose';
 
+export interface IShaSecDocument extends Document {
+  alias: string;
+  string: string;
+}
+
+const SharedSecretSchema = new Schema({
+  alias: String,
+  string: String,
+});
+
 export interface IUserDocument extends Document {
   root: boolean;
   created: number;
@@ -11,7 +21,7 @@ export interface IUserDocument extends Document {
 const UserSchema = new Schema({
   nickname: String,
   password: String,
-  sharedSecrets: [ String ],
+  sharedSecrets: [ SharedSecretSchema ],
   root: { type: Boolean, default: false },
   created: { type: Date, default: Date.now() },
 });
