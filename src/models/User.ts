@@ -30,3 +30,8 @@ export const User: Model<IUserDocument> = model<IUserDocument>(
   'User',
   UserSchema,
 );
+
+export const SharedSecret: Model<IShaSecDocument> = model<IShaSecDocument>(
+  'SharedSecret',
+  SharedSecretSchema,
+);
