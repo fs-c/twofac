@@ -24,9 +24,17 @@ export function redirectIfLoggedOn(
   }
 }
 
+import generate from './totp/generate';
 router.get('/', async (ctx, next) => {
   if (ctx.isAuthenticated()) {
-    await ctx.render('index', { user: ctx.state.user });
+    const codes: any = {};
+    const { user } = ctx.state;
+
+    for (const secret of user.sharedSecrets) {
+      codes[secret.alias] = generate(secret.string);
+    }
+
+    await ctx.render('index', { user, codes});
   } else {
     await ctx.render('public');
   }
