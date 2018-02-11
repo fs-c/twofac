@@ -58,5 +58,5 @@ router.get('/delete/:alias', ifLoggedOn, async (ctx, next) => {
     }
   }
 
-  ctx.throw(new Error('Secret not found.'));
+  ctx.throw(new Error('Alias not found.'));
 });
