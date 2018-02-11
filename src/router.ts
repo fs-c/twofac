@@ -26,7 +26,7 @@ export function redirectIfLoggedOn(
 
 router.get('/', async (ctx, next) => {
   if (ctx.isAuthenticated()) {
-    await ctx.render('index');
+    await ctx.render('index', { user: ctx.state.user });
   } else {
     await ctx.render('public');
   }
