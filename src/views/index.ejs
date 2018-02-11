@@ -8,6 +8,13 @@
     <style>
       .container { margin-top: 1em; }
       form { margin: 0em; }
+
+      .cell {
+        padding-bottom: 0.5em;
+        padding-top: 0.5em;        
+        border-bottom: 1px solid #E1E1E1; }
+
+      .margin-left { margin-left: 2em; }
     </style>
   </head>
 
@@ -25,8 +32,21 @@
 
         <div class="twelve columns">
           <% user.sharedSecrets.forEach((secret) => { %>
-            Alias: <%= secret.alias %>, string: <%= secret.string %>
-            <span class="u-pull-right"><a href="secret/delete/<%= secret.string %>">Delete</a></span></br>
+
+            <div class="twelve columns cell">
+              <div class="one column">
+                <b><%= codes[secret.alias] %></b>
+              </div>
+
+              <div class="two columns">
+                <%= secret.alias %>
+              </div>
+
+              <div class="nine columns">
+                <a class="u-pull-right" href="secret/delete/<%= secret.alias %>">Delete</a>
+              </div>
+            </div>
+            
           <% }) %>
         </div>
 
