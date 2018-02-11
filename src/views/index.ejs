@@ -7,6 +7,7 @@
 
     <style>
       .container { margin-top: 1em; }
+      form { margin: 0em; }
     </style>
   </head>
 
@@ -20,6 +21,30 @@
               <a href="logout">Log out.</a>
             </span>
           </p>
+        </div>
+
+        <div class="twelve columns">
+          <% user.sharedSecrets.forEach((secret) => { %>
+            Alias: <%= secret.alias %>, string: <%= secret.string %>
+            <span class="u-pull-right"><a href="secret/delete/<%= secret.string %>">Delete</a></span></br>
+          <% }) %>
+        </div>
+
+        <div class="twelve columns card">
+          <form action="secret/add" method="POST">
+            <div class="row">
+              <div class="three columns">
+                <label for="aliasInput">Alias</label>
+                <input class="u-full-width" id="aliasInput" type="text" placeholder="Main" name="alias">
+              </div>
+              <div class="nine columns">
+                <label for="shasecInput">Shared Secret</label>
+                <input class="u-full-width" id="shasecInput" type="text" placeholder="...=" name="sharedSecret">
+              </div>
+            </div>
+            
+            <input class="button-primary" type="submit" value="add">
+          </form>
         </div>
       </div>
     </div>
