@@ -5,6 +5,7 @@ export default router;
 
 type INext = () => Promise<any>;
 
+// Redirect to login if not logged in, otherwise allow.
 export function ifLoggedOn(ctx: Router.IRouterContext, next: INext) {
   if (ctx.isAuthenticated()) {
     return next();
@@ -13,6 +14,7 @@ export function ifLoggedOn(ctx: Router.IRouterContext, next: INext) {
   }
 }
 
+// Redirect to root if logged on.
 export function redirectIfLoggedOn(
   ctx: Router.IRouterContext,
   next: INext,
@@ -26,6 +28,8 @@ export function redirectIfLoggedOn(
 
 import generate from './totp/generate';
 router.get('/', async (ctx, next) => {
+  // Render public index if not authenticated,
+  // generate codes and render private one otherwise.
   if (ctx.isAuthenticated()) {
     const codes: any = {};
     const { user } = ctx.state;

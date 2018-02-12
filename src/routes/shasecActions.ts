@@ -7,6 +7,7 @@ import { User, SharedSecret } from '../models/User';
 const router = new Router();
 export default router;
 
+// Generate and return a code given a shared secret in body.
 router.post('/generate', async (ctx, next) => {
   const { sharedSecret } = ctx.request.body;
 
@@ -19,6 +20,7 @@ router.post('/generate', async (ctx, next) => {
   return await ctx.success('Generated code: ' + code);
 });
 
+// Add a shared secret to logged on user.
 router.post('/add', ifLoggedOn, async (ctx, next) => {
   const { alias, sharedSecret } = ctx.request.body;
 
@@ -40,6 +42,7 @@ router.post('/add', ifLoggedOn, async (ctx, next) => {
   await ctx.success('Added shasec.');
 });
 
+// Delete a shared secret by alias from logged on user.
 router.get('/delete/:alias', ifLoggedOn, async (ctx, next) => {
   const { user } = ctx.state;
   const { alias } = ctx.params;

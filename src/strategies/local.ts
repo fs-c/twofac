@@ -5,7 +5,7 @@ import { compare, hashSync, genSaltSync } from 'bcrypt-nodejs';
 
 export default function strategy(passport: any) { // TODO: Dirty.
   passport.use('local-signup', new LocalStrategy({
-    passReqToCallback: true,
+    passReqToCallback: true, // For flash functionality.
   }, (req: any, name, pass, done) => { // TODO: Dirty.
     const ctx: Context = req.ctx;
 
@@ -32,7 +32,7 @@ export default function strategy(passport: any) { // TODO: Dirty.
   }));
 
   passport.use('local-login', new LocalStrategy({
-    passReqToCallback: true,
+    passReqToCallback: true, // For flash functionality.
   }, (req: any, name, pass, done) => { // TODO: Dirty.
     const ctx: Context = req.ctx;
 
