@@ -61,9 +61,9 @@ app.use(async (ctx, next) => {
 
     if (typeof data === 'string') {
       obj.message = data;
-    } else {
-      obj = data;
-    }
+    } else if (typeof data === 'object') {
+      obj = Object.assign(obj, data); // Merge objects.
+    } else { obj = data; }
 
     return await ctx.render('status', obj);
   };
@@ -71,7 +71,7 @@ app.use(async (ctx, next) => {
   await next();
 });
 
-// Log errors.
+// Handle errors.
 app.use(async (ctx, next) => {
   try {
     await next();
