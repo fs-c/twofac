@@ -47,7 +47,7 @@ app.use(async (ctx, next) => {
       extension: 'ejs',
       options: {
         node: process.version,
-        back: ctx.request.get('referer' || '/'),
+        back: ctx.request.get('referer') || '/',
         version: require('../package.json').version,
       },
     },
