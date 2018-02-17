@@ -15,7 +15,7 @@ export interface IUserDocument extends Document {
   created: number;
   nickname: string;
   password: string;
-  sharedSecrets: string[];
+  sharedSecrets: IShaSecDocument[];
 }
 
 const UserSchema = new Schema({
