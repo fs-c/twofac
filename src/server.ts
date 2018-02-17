@@ -95,15 +95,13 @@ const port = parseInt(process.env.PORT, 10) || 8080;
 export const server = app.listen(port);
 debug('server listening on %o', port);
 
-import * as mongoose from 'mongoose';
-
 const { DB_URL, DB_PASS, DB_USER } = process.env;
-
-// Connect to database.
-if (DB_URL && DB_PASS && DB_USER) {
-  mongoose.connect(`mongodb://${DB_USER}:${DB_PASS}@${DB_URL}`)
-    .then(() => debug('connected to database'))
-    .catch((err) => debug('database connection error: %O', err.message));
-} else {
+if (!(DB_URL && DB_PASS && DB_USER)) {
   throw new Error('Missing database connection parameters.');
 }
+
+// Connect to database.
+import * as mongoose from 'mongoose';
+mongoose.connect(`mongodb://${DB_USER}:${DB_PASS}@${DB_URL}`)
+  .then(() => debug('connected to database'))
+  .catch((err) => debug('database connection error: %O', err.message));
