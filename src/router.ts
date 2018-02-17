@@ -28,7 +28,7 @@ export function redirectIfLoggedOn(
 
 import generate from './totp/generate';
 router.get('/', async (ctx, next) => {
-  // Render public index if not authenticated,
+  // Render public index if not logged on,
   // generate codes and render private one otherwise.
   if (ctx.isAuthenticated()) {
     const codes: any = {};
