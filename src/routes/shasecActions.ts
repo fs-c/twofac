@@ -17,7 +17,11 @@ router.post('/generate', async (ctx, next) => {
 
   const code = generate(sharedSecret);
 
-  return await ctx.success('Generated code: ' + code);
+  console.log(ctx.request.href);
+
+  // Assume that the user is not logged in and called /generate from the public
+  // index.
+  return await ctx.render('public', { code });
 });
 
 // Add a shared secret to logged on user.

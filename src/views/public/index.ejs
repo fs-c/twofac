@@ -28,7 +28,15 @@
             To be used for logging on to steam accounts with steam two factor 
             authentication without requiring you to have your phone at hand.
           </p>
-        </div>
+				</div>
+
+				<% if (locals.code) { %>
+					<div class="twelve columns">
+						<p>
+							Code: <b><%= code %></b>
+						</p>
+					</div>
+				<% } %>
 
         <div class="twelve columns">
           <p>
