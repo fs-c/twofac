@@ -3,6 +3,8 @@ import { User, IUserDocument } from '../models/User';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { compare, hashSync, genSaltSync } from 'bcrypt-nodejs';
 
+const genericDbError = new Error('A database error occurred');
+
 export default function strategy(passport: any) { // TODO: Dirty.
   passport.use('local-signup', new LocalStrategy({
     passReqToCallback: true, // For flash functionality.
@@ -11,7 +13,7 @@ export default function strategy(passport: any) { // TODO: Dirty.
 
     process.nextTick(() => {
       User.findOne({ nickname: name }, (dbErr, user) => {
-        if (dbErr) { return done(dbErr); }
+        if (dbErr) { return done(genericDbError); }
         if (user) {
           ctx.flash.set('A user with this name already exists.');
           return done(null, false);
@@ -26,7 +28,7 @@ export default function strategy(passport: any) { // TODO: Dirty.
           password: hashSync(pass, genSaltSync(8)),
         });
 
-        newUser.save((saveErr) => done(saveErr, newUser));
+        newUser.save((saveErr) => done(genericDbError, newUser));
       });
     });
   }));
@@ -38,7 +40,7 @@ export default function strategy(passport: any) { // TODO: Dirty.
 
     process.nextTick(() => {
       User.findOne({ nickname: name }, (dbErr, user) => {
-        if (dbErr) { return done(dbErr); }
+        if (dbErr) { return done(genericDbError); }
         if (!user) {
           ctx.flash.set('The given user was not found.');
           return done(null, false);
