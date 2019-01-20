@@ -5,6 +5,9 @@ export default router;
 
 type INext = () => Promise<any>;
 
+const prefix = process.env.PREFIX ? `/${process.env.PREFIX}/` : '';
+router.prefix(prefix);
+
 // Redirect to login if not logged in, otherwise allow.
 export function ifLoggedOn(ctx: Router.IRouterContext, next: INext) {
   if (ctx.isAuthenticated()) {
@@ -38,7 +41,7 @@ router.get('/', async (ctx, next) => {
       codes[secret.alias] = generate(secret.string);
     }
 
-    await ctx.render('index', { user, codes});
+    await ctx.render('index', { user, codes });
   } else {
     await ctx.render('public');
   }

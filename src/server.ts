@@ -30,14 +30,15 @@ app.use(session({}, app));
 import flash from './middleware/flash';
 app.use(flash());
 
+// Serve static assets.
+import * as mount from 'koa-mount';
+import * as serve from 'koa-static';
+app.use(mount(`/${process.env.PREFIX}/`, serve(join(__dirname, '/public'))));
+
 // Auth flow.
 import passport from './auth';
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Serve static assets.
-import * as serve from 'koa-static';
-app.use(serve(join(__dirname, '/public')));
 
 // Render views, always pass some metadata.
 import * as views from 'koa-views';
@@ -49,6 +50,7 @@ app.use(async (ctx, next) => {
         node: process.version,
         back: ctx.request.get('referer') || '/',
         version: require('../package.json').version,
+        base: `${ctx.protocol}://${ctx.host}/${process.env.PREFIX || ''}`,
       },
     },
   )(ctx, next);
