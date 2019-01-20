@@ -33,7 +33,7 @@ app.use(flash());
 // Serve static assets.
 import * as mount from 'koa-mount';
 import * as serve from 'koa-static';
-app.use(mount(`/${process.env.PREFIX}/`, serve(join(__dirname, '/public'))));
+app.use(mount(`/${process.env.ROOT}/`, serve(join(__dirname, '/public'))));
 
 // Auth flow.
 import passport from './auth';
@@ -52,7 +52,7 @@ app.use(async (ctx, next) => {
         node: process.version,
         back: ctx.request.get('referer') || '/',
         version: require('../package.json').version,
-        base: `${protocol}://${ctx.host}/${process.env.PREFIX || ''}`,
+        base: `${protocol}://${ctx.host}/${process.env.ROOT || ''}`,
       },
     },
   )(ctx, next);

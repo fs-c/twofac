@@ -5,7 +5,9 @@ export default router;
 
 type INext = () => Promise<any>;
 
-const prefix = process.env.PREFIX ? `/${process.env.PREFIX}/` : '';
+// TODO: With an empty root this will produce /// which works on most servers
+// but it's suboptimal.
+const prefix = process.env.ROOT ? `/${process.env.ROOT}/` : '/';
 router.prefix(prefix);
 
 // Redirect to login if not logged in, otherwise allow.
@@ -13,7 +15,7 @@ export function ifLoggedOn(ctx: Router.IRouterContext, next: INext) {
   if (ctx.isAuthenticated()) {
     return next();
   } else {
-    ctx.redirect('/login');
+    ctx.redirect(prefix + 'login');
   }
 }
 
@@ -23,7 +25,7 @@ export function redirectIfLoggedOn(
   next: INext,
 ) {
   if (ctx.isAuthenticated()) {
-    ctx.redirect('/');
+    ctx.redirect(prefix);
   } else {
     return next();
   }
