@@ -25,7 +25,7 @@
           <p>
             Welcome, <b><%= user.nickname %></b>.
             <span class="u-pull-right">
-              <a href="logout">Log out.</a>
+              <a href="<%= base %>/logout">Log out.</a>
             </span>
           </p>
         </div>
@@ -43,7 +43,9 @@
               </div>
 
               <div class="nine columns">
-                <a class="u-pull-right" href="secret/delete/<%= secret.alias %>">Delete</a>
+                <a class="u-pull-right" href="<%= base %>/secret/delete/<%= secret.alias %>">
+                  Delete
+                </a>
               </div>
             </div>
             
@@ -51,18 +53,20 @@
         </div>
 
         <div class="twelve columns card">
-          <form action="secret/add" method="POST">
+          <form action="<%= base %>/secret/add" method="POST">
             <div class="row">
               <div class="three columns">
                 <label for="aliasInput">Alias</label>
-                <input class="u-full-width" id="aliasInput" type="text" placeholder="Main" name="alias">
+                <input class="u-full-width" id="aliasInput" type="text"
+                  placeholder="Main" name="alias">
               </div>
               <div class="nine columns">
                 <label for="shasecInput">Shared Secret</label>
-                <input class="u-full-width" id="shasecInput" type="text" placeholder="...=" name="sharedSecret">
+                <input class="u-full-width" id="shasecInput" type="text"
+                  placeholder="...=" name="sharedSecret">
               </div>
             </div>
-            
+
             <input class="button-primary" type="submit" value="add">
           </form>
         </div>
