@@ -43,7 +43,7 @@ app.use(passport.session());
 // Render views, always pass some metadata.
 import * as views from 'koa-views';
 app.use(async (ctx, next) => {
-  const protocol = process.env.DEFAULT_PROTOCOL || 'https';
+  const protocol = process.env.PROTOCOL || 'https';
 
   await views(
     join(__dirname, '/views'), {
