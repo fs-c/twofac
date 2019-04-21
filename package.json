@@ -2,8 +2,9 @@
   "name": "twofac",
   "version": "0.5.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.ts",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon -e ts,tsx --exec ts-node ./src/server.ts"
   },
