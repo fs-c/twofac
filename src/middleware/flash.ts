@@ -5,6 +5,12 @@ const debug = logger('flash');
 
 export default function flash() {
   return (ctx: Context, next: () => Promise<any>) => {
+    if (ctx.session === undefined) {
+        debug('session object does not exist');
+
+        return next();
+    }
+
     const prev = ctx.session.flash;
 
     if (prev) {
