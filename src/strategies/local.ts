@@ -1,5 +1,5 @@
 import { Context } from 'koa';
-import { User, IUserDocument } from '../models/User';
+import { User } from '../models/User';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { compare, hashSync, genSaltSync } from 'bcrypt-nodejs';
 

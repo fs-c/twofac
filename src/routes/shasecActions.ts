@@ -2,7 +2,7 @@ import * as Router from 'koa-router';
 
 import { ifLoggedOn } from '../router';
 import generate from '../totp/generate';
-import { User, SharedSecret } from '../models/User';
+import { SharedSecret } from '../models/User';
 
 const router = new Router();
 export default router;
