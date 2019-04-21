@@ -20,10 +20,7 @@ export function ifLoggedOn(ctx: Router.IRouterContext, next: INext) {
 }
 
 // Redirect to root if logged on.
-export function redirectIfLoggedOn(
-  ctx: Router.IRouterContext,
-  next: INext,
-) {
+export function redirectIfLoggedOn(ctx: Router.IRouterContext, next: INext) {
   if (ctx.isAuthenticated()) {
     ctx.redirect(prefix);
   } else {

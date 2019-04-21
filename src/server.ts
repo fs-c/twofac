@@ -9,8 +9,15 @@ import { join } from 'path';
 
 const app = new Koa();
 
+let secret = process.env.SESSION_SECRET;
+if (!secret) {
+  debug('no session secret provided');
+
+  secret = '';
+}
+
 app.proxy = true; // Trust first proxy.
-app.keys = [ process.env.SESSION_SECRET ];
+app.keys = [secret];
 
 // Dev-style request logging.
 import * as log from 'koa-logger';
@@ -45,17 +52,15 @@ import * as views from 'koa-views';
 app.use(async (ctx, next) => {
   const protocol = process.env.PROTOCOL || 'https';
 
-  await views(
-    join(__dirname, '/views'), {
-      extension: 'ejs',
-      options: {
-        node: process.version,
-        back: ctx.request.get('referer') || '/',
-        version: require('../package.json').version,
-        base: `${protocol}://${ctx.host}/${process.env.ROOT || ''}`,
-      },
+  await views(join(__dirname, '/views'), {
+    extension: 'ejs',
+    options: {
+      node: process.version,
+      back: ctx.request.get('referer') || '/',
+      version: require('../package.json').version,
+      base: `${protocol}://${ctx.host}/${process.env.ROOT || ''}`,
     },
-  )(ctx, next);
+  })(ctx, next);
 });
 
 // Convenience success status wrapper in the context.
@@ -67,7 +72,9 @@ app.use(async (ctx, next) => {
       obj.message = data;
     } else if (typeof data === 'object') {
       obj = Object.assign(obj, data); // Merge objects.
-    } else { obj = data; }
+    } else {
+      obj = data;
+    }
 
     return await ctx.render('status', obj);
   };
@@ -95,7 +102,7 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 // Start server.
-const port = parseInt(process.env.PORT, 10) || 8080;
+const port = parseInt(process.env.PORT || '8080', 10);
 export const server = app.listen(port);
 debug('server listening on %o', port);
 
@@ -106,6 +113,8 @@ if (!(DB_URL && DB_PASS && DB_USER)) {
 
 // Connect to database.
 import * as mongoose from 'mongoose';
-mongoose.connect(`mongodb://${DB_USER}:${DB_PASS}@${DB_URL}`)
+
+mongoose
+  .connect(`mongodb://${DB_USER}:${DB_PASS}@${DB_URL}`)
   .then(() => debug('connected to database'))
   .catch((err) => debug('database connection error: %O', err.message));
