@@ -2,14 +2,13 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es2017",
-    "noImplicitAny": true,
+    "strict": true,
+    "removeComments": true,
+    "noUnusedLocals": true,
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "typeRoots": ["src/typings"]
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src/**/*"],
+  "exclude": ["node_modules"]
 }
