@@ -5,7 +5,7 @@ const debug = logger('flash');
 
 export default function flash() {
   return (ctx: Context, next: () => Promise<any>) => {
-    if (ctx.session === undefined) {
+    if (!ctx.session) {
         debug('session object does not exist');
 
         return next();
@@ -22,7 +22,7 @@ export default function flash() {
 
     ctx.flash = {
       get: () => prev,
-      set: (data: any) => ctx.session.flash = data,
+      set: (data: any) => ctx.session ? ctx.session.flash = data : null,
     };
 
     return next();
