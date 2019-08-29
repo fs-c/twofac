@@ -14,13 +14,19 @@ module.exports = async (fastify, opts) => {
         type: 'object',
         properties: {
             status: 'status#',
+            error: {
+                type: 'object',
+                properties: {
+                    message: { type: 'string' },
+                },
+            },
         },
     });
 
     fastify.get('/', {
         schema: {
             response: {
-                '2xx': 'status#',
+                '2xx': { type: 'object', properties: { status: 'status#' } },
                 '4xx': 'error#',
                 '5xx': 'error#',
             },
@@ -28,7 +34,7 @@ module.exports = async (fastify, opts) => {
     }, async (req, res) => ({
         status: {
             success: true,
-            message: 'Did you get lost?',
+            message: 'Hello world',
         },
     }));
 
