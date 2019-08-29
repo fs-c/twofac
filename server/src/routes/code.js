@@ -1,17 +1,5 @@
-const SteamTotp = require('steam-totp');
 const { UserError } = require('../error');
-
-const promisify = (fn, ...args) => {
-    return new Promise((resolve, reject) => {
-        fn(...args, (err, ...data) => {
-            if (err) {
-                return reject(err);
-            } else {
-                return resolve(data);
-            }
-        });
-    });
-};
+const { generate } = require('../steam/totp');
 
 module.exports = async (fastify, opts) => {
     fastify.post('/generate', {
@@ -40,12 +28,8 @@ module.exports = async (fastify, opts) => {
         },
     }, async (req, res) => {
         try {
-            const [ code, offset, latency ] = await promisify(SteamTotp.getAuthCode,
-                req.body.secret);
-            fastify.log.debug('got auth', { code, offset, latency });            
-
             return {
-                code, offset, latency,
+                ...(await generate(req.body.secret)),
                 status: {
                     success: true,
                     message: 'Generated auth code',
