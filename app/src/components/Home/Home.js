@@ -6,7 +6,7 @@ import SingleCodeGenerator from '../SingleCodeGenerator/SingleCodeGenerator';
 
 const Home = () => {
     return (<>
-        <div className='h-100 mt-3 mt-md-5'>
+        <div className='h-100 pt-3 pt-md-5'>
             <Container>
                 <p>
                     <strong className='color-rotating'>twofac</strong>
