@@ -7,11 +7,15 @@ body {
     -moz-osx-font-smoothing: grayscale;
 
     min-height: 100vh;
-    color: rgba(255, 255, 255, 0.925);
     background-color: black;
+    color: rgba(255, 255, 255, 0.925);
 
     /* Stolen from Steam */
     /* background: linear-gradient( to bottom, rgba(42,71,94,1.0) 5%, rgba(42,71,94,0.0) 70%), #1b2838; */
+}
+
+#root {
+    min-height: 100vh;
 }
 
 code {
@@ -33,20 +37,15 @@ code {
     color: #f35626;
     display: inline-block;
     animation: hue 20s infinite linear;
-    -webkit-animation: hue 20s infinite linear;
 }
 
 @keyframes hue {
     from {
-        -webkit-filter: hue-rotate(0deg);
+        filter: hue-rotate(0deg) saturate(0.75);
     }
     to {
-        -webkit-filter: hue-rotate(360deg);
+        filter: hue-rotate(360deg) saturate(0.75);
     }
-}
-
-#root {
-    height: 100vh;
 }
 
 /* Bootstrap overrides */
