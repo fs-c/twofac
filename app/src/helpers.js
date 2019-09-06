@@ -14,9 +14,9 @@ export function getBaseName() {
 }
 
 export function generateMobileCode(secret) {
-    if (/* secret.length !== 28 ||  */secret[secret.length - 1] !== '=') {
+    /* if (secret.length !== 28 || secret[secret.length - 1] !== '=') {
         throw new Error('Malformed secret');
-    }
+    } */
 
     return totp.getAuthCode(secret, 0);
 }
