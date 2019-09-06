@@ -4,14 +4,16 @@ import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 
-import { generateMobileCode } from '../../helpers';
+import { useInterval, generateMobileCode, getRemainingTime } from '../../helpers';
 
 const SingleCodeGenerator = () => {
     const [ code, setCode ] = useState('');
     const [ error, setError ] = useState(null);
     const [ secret, setSecret ] = useState('');
+    const [ remainingTime, setRemainingTime ] = useState(0);
 
     const updateCode = async () => {
+        setCode('');
         setError(null);
 
         try {
@@ -24,18 +26,32 @@ const SingleCodeGenerator = () => {
         }
     };
 
+    useInterval(async () => {
+        const remaining = getRemainingTime();
+
+        if (remaining === 30) {
+            await updateCode();
+        }
+
+        setRemainingTime(getRemainingTime());
+    }, 1000);
+
     return (<>
         <Form>
-            <Form.Control className='bg-dark border-dark text-light'
-                placeholder='Enter Shared Secret here'
-                value={secret}
-                onChange={(event) => setSecret(event.target.value)}
-            />
-            <Form.Text className='text-muted'>
-                Your Shared Secret will not be transmitted to our servers
-            </Form.Text>
-        
-            <Button variant='light' className='border mt-2 bg-dark text-light border-dark'
+            <Form.Group>
+                <Form.Control id='inputSharedSecret'
+                    className='bg-dark border-dark text-light'
+                    placeholder='Shared Secret'
+                    value={secret}
+                    onChange={(event) => setSecret(event.target.value)}
+                />
+
+                <Form.Text className='text-muted'>
+                    Your Shared Secret will not be transmitted to our servers
+                </Form.Text>
+            </Form.Group>
+            
+            <Button variant='light' className='border mt-0 bg-dark text-light border-dark'
                 onClick={updateCode}
             >
                 Generate
@@ -46,9 +62,9 @@ const SingleCodeGenerator = () => {
             {error && (
                 <Alert variant='danger' className='bg-dark text-light border-danger'>
                     An error occured while generating your token: <strong>{error.message}</strong>
-                    <hr className='m-0 mt-1' />
+                    <hr className='m-0 mt-2' />
                     <small>
-                        If you have a minute, feel free to <a href='/contact' className='text-link'>send us an error report</a>, preferably 
+                        If you have a minute, feel free to <a href='/contact' className='text-link'>send me an error report</a>, preferably 
                         with the error logged in the console (<kbd>F12</kbd>).
                     </small>
                 </Alert>
@@ -59,7 +75,7 @@ const SingleCodeGenerator = () => {
                     Your code has been generated
                     <hr className='mt-1 mb-2' />
                     <Alert.Heading>
-                        {code}
+                        {code} <small className='text-muted'>{remainingTime}s</small>
                     </Alert.Heading>
                 </Alert>
             )}
