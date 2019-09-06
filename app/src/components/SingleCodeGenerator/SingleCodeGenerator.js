@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import Form from 'react-bootstrap/Form';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 import { useInterval, generateMobileCode, getRemainingTime } from '../../helpers';
 
@@ -12,51 +13,63 @@ const SingleCodeGenerator = () => {
     const [ secret, setSecret ] = useState('');
     const [ remainingTime, setRemainingTime ] = useState(0);
 
-    const updateCode = async () => {
-        setCode('');
-        setError(null);
-
+    const generateCode = () => {
         try {
-            setCode(await generateMobileCode(secret));
+            setCode(generateMobileCode(secret));
         } catch (err) {
-            setCode('');
             setError(err);
+        }
+    }
 
-            console.error(err);
+    useInterval(() => {
+        const remaining = getRemainingTime();
+        setRemainingTime(getRemainingTime());
+
+        if (!secret) {
+            return;
+        }
+
+        if (remaining === 30) {
+            generateCode();
+        }
+    }, 1000);
+
+    const handleSecretChange = ({ target }) => {
+        const secret = target.value;
+
+        setSecret(secret);
+
+        if (secret) {
+            generateCode();
+        } else {
+            setCode('');
         }
     };
 
-    useInterval(async () => {
-        const remaining = getRemainingTime();
-
-        if (remaining === 30) {
-            await updateCode();
-        }
-
-        setRemainingTime(getRemainingTime());
-    }, 1000);
-
     return (<>
-        <Form>
-            <Form.Group>
-                <Form.Control id='inputSharedSecret'
+        <div className='mt-3'>
+            <InputGroup>
+                <FormControl id='inputSharedSecret'
                     className='bg-dark border-dark text-light'
                     placeholder='Shared Secret'
                     value={secret}
-                    onChange={(event) => setSecret(event.target.value)}
+                    onChange={handleSecretChange}
+                />
+            </InputGroup>
+
+            <InputGroup className='mt-3'>
+                <FormControl id='inputAlias'
+                    className='bg-dark border-dark text-light'
+                    placeholder='Alias'
                 />
 
-                <Form.Text className='text-muted'>
-                    Your Shared Secret will not be transmitted to our servers
-                </Form.Text>
-            </Form.Group>
-            
-            <Button variant='light' className='border mt-0 bg-dark text-light border-dark'
-                onClick={updateCode}
-            >
-                Generate
-            </Button>
-        </Form>
+                <InputGroup.Append>
+                    <Button variant='dark' className='mt-0 bg-dark text-light append-border-grey'>
+                        Save
+                    </Button>
+                </InputGroup.Append>
+            </InputGroup>
+        </div>
 
         <div className='mt-3'>
             {error && (
