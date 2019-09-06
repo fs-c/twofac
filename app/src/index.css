@@ -48,6 +48,10 @@ code {
     }
 }
 
+.append-border-grey {
+    border-left-color: #495057!important;
+}
+
 /* Bootstrap overrides */
 
 .form-control:focus {
