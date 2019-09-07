@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
-const SecretInput = ({ liveSecret, setLiveSecret }) => {
-    // TODO: When added as an inline style, this doesn't make it into the HTML DOM,
-    // investigate
-    /* const codeStyle = codes[0] ? {
-        background: `linear-gradient(90deg, black ${1 - (remainingTime / 30)}%, inherit 0%)`,
-    } : {}; */
+const SecretInput = ({ setLiveSecret }) => {
+    const [ secret, setSecret ] = useState(null);
 
     return (<>
         <InputGroup>
             <FormControl id='inputSharedSecret'
                 className='bg-dark border-dark text-light'
                 placeholder='Shared Secret'
-                value={liveSecret}
-                onChange={({ target }) => setLiveSecret(target.value)}
+                value={secret}
+                onChange={({ target }) => setSecret(target.value)}
+                autocomplete='off'
             />
+
+            <InputGroup.Append>
+                <Button variant='dark' className='bg-dark text-light append-border-grey'
+                    onClick={() => setLiveSecret(secret)}
+                >
+                    Generate
+                </Button>
+            </InputGroup.Append>
         </InputGroup>
 
         <InputGroup className='mt-3'>
