@@ -48,7 +48,7 @@ const Home = () => {
                 </p>
 
                 <div className='mt-3'>
-                    <SecretInput liveSecret={liveSecret} setLiveSecret={setLiveSecret} />
+                    <SecretInput setLiveSecret={setLiveSecret} />
                 </div>
 
                 <div className='mt-5'>
