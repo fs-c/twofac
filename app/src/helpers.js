@@ -13,12 +13,12 @@ export function getBaseName() {
 	: '/';
 }
 
-export function generateMobileCode(secret) {
+export function generateMobileCode(secret, offset = 0) {
     /* if (secret.length !== 28 || secret[secret.length - 1] !== '=') {
         throw new Error('Malformed secret');
     } */
 
-    return totp.getAuthCode(secret, 0);
+    return totp.getAuthCode(secret, offset);
 }
 
 export function useInterval(callback, delay) {
