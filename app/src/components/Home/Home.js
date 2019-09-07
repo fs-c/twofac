@@ -47,11 +47,11 @@ const Home = () => {
                     A web implementation of <a className='text-link' href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>Steam flavored Two-Factor Authentication</a>.
                 </p>
 
-                <div>
+                <div className='mt-3'>
                     <SecretInput liveSecret={liveSecret} setLiveSecret={setLiveSecret} />
                 </div>
 
-                <div>
+                <div className='mt-5'>
                     <CodeList remainingTime={remainingTime} liveCode={liveCode} />
                 </div>
             </Container>

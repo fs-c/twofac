@@ -12,29 +12,27 @@ const SecretInput = ({ liveSecret, setLiveSecret }) => {
     } : {}; */
 
     return (<>
-        <div className='mt-3'>
-            <InputGroup>
-                <FormControl id='inputSharedSecret'
-                    className='bg-dark border-dark text-light'
-                    placeholder='Shared Secret'
-                    value={liveSecret}
-                    onChange={({ target }) => setLiveSecret(target.value)}
-                />
-            </InputGroup>
+        <InputGroup>
+            <FormControl id='inputSharedSecret'
+                className='bg-dark border-dark text-light'
+                placeholder='Shared Secret'
+                value={liveSecret}
+                onChange={({ target }) => setLiveSecret(target.value)}
+            />
+        </InputGroup>
 
-            <InputGroup className='mt-3'>
-                <FormControl id='inputAlias'
-                    className='bg-dark border-dark text-light'
-                    placeholder='Alias'
-                />
+        <InputGroup className='mt-3'>
+            <FormControl id='inputAlias'
+                className='bg-dark border-dark text-light'
+                placeholder='Alias'
+            />
 
-                <InputGroup.Append>
-                    <Button variant='dark' className='mt-0 bg-dark text-light append-border-grey'>
-                        Save
-                    </Button>
-                </InputGroup.Append>
-            </InputGroup>
-        </div>
+            <InputGroup.Append>
+                <Button variant='dark' className='mt-0 bg-dark text-light append-border-grey'>
+                    Save
+                </Button>
+            </InputGroup.Append>
+        </InputGroup>
     </>);
 };
 
