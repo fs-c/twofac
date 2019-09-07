@@ -3,6 +3,12 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 
 const CodeList = ({ liveCode, remainingTime }) => {
+    // TODO: When added as an inline style, this doesn't make it into the HTML DOM,
+    // investigate
+    /* const codeStyle = codes[0] ? {
+        background: `linear-gradient(90deg, black ${1 - (remainingTime / 30)}%, inherit 0%)`,
+    } : {}; */
+
     return (<>
         {(liveCode && liveCode.current) && (
             <Alert variant='dark' className='bg-dark text-light border-success'>
