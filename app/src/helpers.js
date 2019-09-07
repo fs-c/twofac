@@ -18,6 +18,10 @@ export function generateMobileCode(secret, offset = 0) {
         throw new Error('Malformed secret');
     } */
 
+    if (!secret) {
+        return '';
+    }
+
     return totp.getAuthCode(secret, offset);
 }
 
