@@ -49,3 +49,32 @@ export function useInterval(callback, delay) {
 export function getRemainingTime() {
     return 30 - (Math.floor(Date.now() / 1000) % 30);
 }
+
+export class LocalSecretStore {
+    static getAll() {
+        const secrets = [];
+
+        for (let i = 0; i < localStorage.length; i++) {
+            const alias = localStorage.key(i);
+
+            secrets.push({
+                alias,
+                secret: localStorage.getItem(alias),
+            });
+        }
+
+        return secrets;
+    }
+
+    static add(alias, secret) {
+        localStorage.setItem(alias, secret);
+    }
+
+    static remove(alias) {
+        localStorage.removeItem(alias);
+    }
+
+    static clear() {
+        localStorage.clear();
+    }
+}
