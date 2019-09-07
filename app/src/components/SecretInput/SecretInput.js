@@ -4,8 +4,18 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
-const SecretInput = ({ setLiveSecret }) => {
-    const [ secret, setSecret ] = useState(null);
+const SecretInput = ({ setLiveSecret, saveSecret }) => {
+    const [ alias, setAlias ] = useState('');
+    const [ secret, setSecret ] = useState('');
+
+    const handleSaveClick = () => {
+        if (!secret.length) {
+            // TODO: Communicate this somehow, maybe color the secret input border red
+            return;
+        }
+
+        saveSecret({ alias, secret });
+    }
 
     return (<>
         <InputGroup>
@@ -14,7 +24,7 @@ const SecretInput = ({ setLiveSecret }) => {
                 placeholder='Shared Secret'
                 value={secret}
                 onChange={({ target }) => setSecret(target.value)}
-                autocomplete='off'
+                autoComplete='off-secret-8219843724'
             />
 
             <InputGroup.Append>
@@ -30,10 +40,15 @@ const SecretInput = ({ setLiveSecret }) => {
             <FormControl id='inputAlias'
                 className='bg-dark border-dark text-light'
                 placeholder='Alias'
+                value={alias}
+                onChange={({ target }) => setAlias(target.value)}
+                autoComplete='off-alias-2399048514'
             />
 
             <InputGroup.Append>
-                <Button variant='dark' className='mt-0 bg-dark text-light append-border-grey'>
+                <Button variant='dark' className='mt-0 bg-dark text-light append-border-grey'
+                    onClick={handleSaveClick}
+                >
                     Save
                 </Button>
             </InputGroup.Append>

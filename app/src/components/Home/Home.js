@@ -5,7 +5,9 @@ import Container from 'react-bootstrap/Container';
 import CodeList from '../CodeList/CodeList';
 import SecretInput from '../SecretInput/SecretInput';
 
-import { useInterval, generateMobileCode, getRemainingTime } from '../../helpers';
+import {
+    useInterval, generateMobileCode, getRemainingTime, LocalSecretStore
+} from '../../helpers';
 
 const generateCodeTuple = (secret) => {
     return {
@@ -14,15 +16,32 @@ const generateCodeTuple = (secret) => {
     };
 };
 
+const populateCodeList = (list) => {
+    if (!list || !list.length) {
+        return;
+    }
+
+    return list.map((e) => {
+        e.code = generateCodeTuple(e.secret);
+
+        return e;
+    });
+};
+
 const Home = () => {
     const [ liveCode, setLiveCode ] = useState(null);
     const [ liveSecret, setLiveSecret ] = useState(null);
+
+    const [ codeListItems, setCodeListItems ] = useState([]);
+
     const [ remainingTime, setRemainingTime ] = useState(-1);
 
     useInterval(() => {
         // If it was reset in the last tick
         if (remainingTime === 1) {
             setLiveCode(generateCodeTuple(liveSecret));
+
+            setCodeListItems(populateCodeList(codeListItems));
         }
 
         setRemainingTime(getRemainingTime());
@@ -30,10 +49,22 @@ const Home = () => {
 
     useEffect(() => {
         setLiveCode(generateCodeTuple(liveSecret));
+
+        setCodeListItems(populateCodeList(LocalSecretStore.getAll()));
     }, [ liveSecret ]);
 
+    const saveSecret = ({ alias, secret }) => {
+        codeListItems.push({
+            alias, secret, code: generateCodeTuple(secret),
+        });
+
+        setCodeListItems(codeListItems);
+
+        LocalSecretStore.add(alias, secret);
+    };
+
     return (<>
-        <div className='h-100 pt-3 pt-md-5'>
+        <div className='h-100 pt-3 pt-md-5 pb-4'>
             <Container>
                 <p>
                     <strong className='color-rotating'>twofac</strong>
@@ -48,11 +79,13 @@ const Home = () => {
                 </p>
 
                 <div className='mt-3'>
-                    <SecretInput setLiveSecret={setLiveSecret} />
+                    <SecretInput setLiveSecret={setLiveSecret} saveSecret={saveSecret} />
                 </div>
 
-                <div className='mt-5'>
-                    <CodeList remainingTime={remainingTime} liveCode={liveCode} />
+                <div className='mt-4'>
+                    <CodeList remainingTime={remainingTime} liveCode={liveCode}
+                        codes={codeListItems}
+                    />
                 </div>
             </Container>
         </div>
