@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Container from 'react-bootstrap/Container';
 
-import SingleCodeGenerator from '../SingleCodeGenerator/SingleCodeGenerator';
+import CodeList from '../CodeList/CodeList';
+import SecretInput from '../SecretInput/SecretInput';
+
+import { useInterval, generateMobileCode, getRemainingTime } from '../../helpers';
+
+const generateCodeTuple = (secret) => {
+    return {
+        old: generateMobileCode(secret, -30),
+        current: generateMobileCode(secret),
+    };
+};
 
 const Home = () => {
+    const [ liveCode, setLiveCode ] = useState(null);
+    const [ liveSecret, setLiveSecret ] = useState(null);
+    const [ remainingTime, setRemainingTime ] = useState(-1);
+
+    useInterval(() => {
+        // If it was reset in the last tick
+        if (remainingTime === 1) {
+            setLiveCode(generateCodeTuple(liveSecret));
+        }
+
+        setRemainingTime(getRemainingTime());
+    }, 1000);
+
+    useEffect(() => {
+        setLiveCode(generateCodeTuple(liveSecret));
+    }, [ liveSecret ]);
+
     return (<>
         <div className='h-100 pt-3 pt-md-5'>
             <Container>
@@ -21,7 +48,11 @@ const Home = () => {
                 </p>
 
                 <div>
-                    <SingleCodeGenerator />
+                    <SecretInput liveSecret={liveSecret} setLiveSecret={setLiveSecret} />
+                </div>
+
+                <div>
+                    <CodeList remainingTime={remainingTime} liveCode={liveCode} />
                 </div>
             </Container>
         </div>
