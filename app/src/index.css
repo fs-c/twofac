@@ -64,6 +64,16 @@ a:hover {
     border-left-color: #495057!important;
 }
 
+.list-border-transition:not(:last-child) {
+    border-bottom: 1.5px solid transparent;
+    border-image: linear-gradient(90deg, black 20%, #6c757d 100%);
+    border-image-slice: 1;
+}
+
+.bg-inherit {
+    background-color: inherit!important;
+}
+
 /* Bootstrap overrides */
 
 .form-control:focus {
