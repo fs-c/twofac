@@ -64,7 +64,7 @@ const Home = () => {
     };
 
     return (<>
-        <Navbar />
+        <Navbar fancy />
 
         <p>
             A web implementation of <a href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>Steam flavored Two-Factor Authentication</a>.
