@@ -4,6 +4,9 @@ import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const CodeList = ({ liveCode, remainingTime, codes }) => {
+    // This could be moved to a .css file, but it's kept around in here in 
+    // case the idea of communicating the remaining time through styling is 
+    // ever relevant again
     const borderStyle = {
         background: 'inherit',
         borderBottom: '1.5px solid transparent',
@@ -17,10 +20,14 @@ const CodeList = ({ liveCode, remainingTime, codes }) => {
                 Your code has been generated
                 <hr className='mt-1 mb-2' />
                 <Alert.Heading>
-                    <span className='h4 mb-0 text-success code'>{liveCode.current}</span> <small className='text-muted'>{remainingTime}s</small> 
-                    <span className='float-right text-muted h5 mb-0 code'>
+                    <code className='h4 mb-0 text-success steam-code'>
+                        {liveCode.current}
+                    </code>{' '}
+                    <small className='text-muted'>{remainingTime}s</small> 
+
+                    <code className='float-right text-muted h5 mb-0 steam-code'>
                         {liveCode.old}
-                    </span>
+                    </code>
                 </Alert.Heading>
             </Alert>
         )}
@@ -33,12 +40,12 @@ const CodeList = ({ liveCode, remainingTime, codes }) => {
                     >
                         <span className='text-muted'>{c.alias}</span><br/>
 
-                        <div className='h5 code'>
-                            {c.code.current}
+                        <div className='h5 steam-code'>
+                            <code>{c.code.current}</code>
 
-                            <span className='h5 code text-muted float-right'>
+                            <code className='steam-code text-muted float-right'>
                                 {c.code.old}
-                            </span>
+                            </code>
                         </div>
                     </ListGroup.Item>
                 ))}
