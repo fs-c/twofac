@@ -1,9 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-// This doesn't work in the browser, sorry McKay
-global._mckay_statistics_opt_out = true;
-
-const totp = require('steam-totp');
+import totp from 'steam-totp';
 
 export function getBaseName() {
 	const { PUBLIC_URL } = process.env;
