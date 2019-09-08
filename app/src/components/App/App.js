@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 
 import Home from '../Home/Home';
@@ -80,6 +81,21 @@ const What = () => {
             in the <a href='https://en.wikipedia.org/wiki/Web_storage'>local storage</a> of 
             your browser. 
         </p>
+
+        <Card text='light' border='warning' style={{ background: 'inherit' }}>
+            <Card.Body>
+                <Card.Text>
+                    The security of the Steam Guard Mobile Authenticator depends on 
+                    the secrecy of the shared key.
+                </Card.Text>
+
+                <Card.Text>
+                    In other words, the vulnerability of your Steam account is usually 
+                    tied to your mobile phone's. <strong>When using <i className='color-rotating-inline'>twofac</i>, it 
+                    is inversely tied to the security of your computer.</strong>
+                </Card.Text>
+            </Card.Body>
+        </Card>
     </>);
 };
 
