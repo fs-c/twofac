@@ -7,7 +7,7 @@ const CodeList = ({ liveCode, remainingTime, codes }) => {
     const borderStyle = {
         background: 'inherit',
         borderBottom: '1.5px solid transparent',
-        borderImage: `linear-gradient(90deg, black 10%, #6c757d 80%)`,
+        borderImage: `linear-gradient(90deg, black 20%, #6c757d 100%)`,
         borderImageSlice: '1',
     };
 
