@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import Container from 'react-bootstrap/Container';
-
 import CodeList from '../CodeList/CodeList';
 import SecretInput from '../SecretInput/SecretInput';
 
@@ -64,30 +62,18 @@ const Home = () => {
     };
 
     return (<>
-        <div className='h-100 pt-3 pt-md-5 pb-4'>
-            <Container>
-                <p>
-                    <strong className='color-rotating'>twofac</strong>
+        <p>
+            A web implementation of <a href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>Steam flavored Two-Factor Authentication</a>.
+        </p>
 
-                    <span className='text-muted float-right'>
-                        <a className='text-link' href='/what?'>/what?</a> <a className='text-link' href='/contact'>/contact</a>
-                    </span>
-                </p>
+        <div className='mt-3'>
+            <SecretInput setLiveSecret={setLiveSecret} saveSecret={saveSecret} />
+        </div>
 
-                <p>
-                    A web implementation of <a className='text-link' href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>Steam flavored Two-Factor Authentication</a>.
-                </p>
-
-                <div className='mt-3'>
-                    <SecretInput setLiveSecret={setLiveSecret} saveSecret={saveSecret} />
-                </div>
-
-                <div className='mt-4'>
-                    <CodeList remainingTime={remainingTime} liveCode={liveCode}
-                        codes={codeListItems}
-                    />
-                </div>
-            </Container>
+        <div className='mt-4'>
+            <CodeList remainingTime={remainingTime} liveCode={liveCode}
+                codes={codeListItems}
+            />
         </div>
     </>);
 };
