@@ -5,8 +5,23 @@ import Container from 'react-bootstrap/Container';
 
 import Home from '../Home/Home';
 
-import config from '../../../../.config.js';
 import { getBaseName } from '../../helpers';
+
+const Navbar = ({ fancy = false }) => {
+    return (
+        <p className='pb-3'>
+            <a href='/'>
+                <strong className={`color-rotating-${fancy ? 'block' : 'inline'} font-italic`}>
+                    twofac
+                </strong>
+            </a>
+
+            <span className='text-muted float-right'>
+                <a href='/what?'>/what?</a> <a href='/contact'>/contact</a>
+            </span>
+        </p>
+    );
+};
 
 const App = () => {
     const basename = getBaseName();
@@ -14,16 +29,6 @@ const App = () => {
     return (<>
         <div className='h-100 pt-3 pt-md-5 pb-4'>
             <Container>
-                <p className='pb-3'>
-                    <a href='/'>
-                        <strong className='color-rotating'>twofac</strong>
-                    </a>
-
-                    <span className='text-muted float-right'>
-                        <a href='/what?'>/what?</a> <a href='/contact'>/contact</a>
-                    </span>
-                </p>
-
                 <Router basename={basename}>
                     <Route exact path='/' component={Home} />
 
@@ -38,9 +43,11 @@ const App = () => {
 
 const What = () => {
     return (<>
+        <Navbar fancy />
+
         <p>
             <strong>
-                What does <i className='color-rotating'>twofac</i> do?
+                What does <i className='color-rotating-inline'>twofac</i> do?
             </strong><br/>
 
             It generates 5-digit codes to be used when logging onto a Steam account 
@@ -78,6 +85,8 @@ const What = () => {
 
 const Contact = () => {
     return (<>
+        <Navbar fancy />
+
         <p>
             You can reach me via email at <a href='mailto:root@fsoc.space'>root@fsoc.space</a>. 
             If email is not your thing, feel free to add <a href='https://steamcommunity.com/id/f50c'>steam/f50c</a> for 
@@ -87,4 +96,4 @@ const Contact = () => {
 };
 
 export default App;
-export { config };
+export { Navbar };

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { Navbar } from '../App/App';
+
 import CodeList from '../CodeList/CodeList';
 import SecretInput from '../SecretInput/SecretInput';
 
@@ -62,6 +64,8 @@ const Home = () => {
     };
 
     return (<>
+        <Navbar />
+
         <p>
             A web implementation of <a href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>Steam flavored Two-Factor Authentication</a>.
         </p>
