@@ -30,14 +30,6 @@ code {
 a {
     color: inherit;
     text-decoration: underline;
-    text-decoration-color: #f35626;
-    animation: hue 20s infinite linear;
-}
-
-a.no-rotate {
-    color: inherit;
-    text-decoration: underline;
-    animation: none!important;
 }
 
 a:hover {

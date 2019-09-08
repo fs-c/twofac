@@ -18,7 +18,7 @@ const Navbar = ({ fancy = false }) => {
             </a>
 
             <span className='text-muted float-right'>
-                <a href='/what?' className='no-rotate'>/what?</a> <a href='/contact' className='no-rotate'>/contact</a>
+                <a href='/what?'>/what?</a> <a href='/contact'>/contact</a>
             </span>
         </p>
     );
@@ -44,7 +44,7 @@ const App = () => {
             <Container>
                 <p>
                     Provided for free and fun by <a href='https://fsoc.space/' className='color-rotating-underline'>fsoc</a>.<br/>
-                    Find the code on <a href='https://github.com/LW2904/twofac'>github</a>.
+                    Find the code on <a href='https://github.com/LW2904/twofac' className='color-rotating-underline'>github</a>.
                 </p>
             </Container>
         </footer>
