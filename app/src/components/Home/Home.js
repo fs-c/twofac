@@ -63,11 +63,17 @@ const Home = () => {
         LocalSecretStore.add(alias, secret);
     };
 
+    const links = {
+        steamAuth: <a href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>
+            Steam flavored Two-Factor Authentication
+        </a>,
+    };
+
     return (<>
         <Navbar fancy />
 
         <p>
-            A web implementation of <a href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>Steam flavored Two-Factor Authentication</a>.
+            A web implementation of {links.steamAuth}.
         </p>
 
         <div className='mt-3'>
