@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { Navbar } from '../App/App';
-
 import CodeList from '../CodeList/CodeList';
 import SecretInput from '../SecretInput/SecretInput';
 
@@ -70,8 +68,6 @@ const Home = () => {
     };
 
     return (<>
-        <Navbar fancy />
-
         <p>
             A web implementation of {links.steamAuth}.
         </p>
