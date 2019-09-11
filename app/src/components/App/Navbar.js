@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { getDisplayName } from '../../helpers'
+
 const Navbar = ({ fancy = false }) => {
     return (
         <p className='pb-3'>
@@ -16,4 +18,21 @@ const Navbar = ({ fancy = false }) => {
     );
 };
 
+const withNavbar = (config) => {
+    return (WrappedComponent) => {
+        const WithNavbar = (props) => {
+            return (<>
+                <Navbar {...config} />
+
+                <WrappedComponent {...props} />
+            </>);
+        };
+
+        WithNavbar.displayName = `WithNavbar(${getDisplayName(WrappedComponent)})`;
+
+        return WithNavbar;
+    };
+};
+
 export default Navbar;
+export { withNavbar };

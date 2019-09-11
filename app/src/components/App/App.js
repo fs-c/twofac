@@ -6,9 +6,10 @@ import Container from 'react-bootstrap/Container';
 import Home from '../Home/Home';
 
 import What from './What';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import Contact from './Contact';
+
+import { withNavbar } from './Navbar';
 
 import { getBaseName } from '../../helpers';
 
@@ -19,20 +20,11 @@ const App = () => {
         <div className='h-100 pt-3 pt-md-5 pb-6'>
             <Container>
                 <Router basename={basename}>
-                    <Route exact path='/'>
-                        <Navbar fancy />
-                        <Home />
-                    </Route>
+                    <Route exact path='/' component={withNavbar({ fancy: true })(Home)} />
 
-                    <Route path='/what'>
-                        <Navbar />
-                        <What />
-                    </Route>
+                    <Route path='/what' component={withNavbar()(What)} />
 
-                    <Route path='/contact'>
-                        <Navbar />
-                        <Contact />
-                    </Route>
+                    <Route path='/contact' component={withNavbar()(Contact)} />
                 </Router>
             </Container>
         </div>

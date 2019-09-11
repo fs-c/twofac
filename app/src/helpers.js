@@ -47,6 +47,10 @@ export function getRemainingTime() {
     return 30 - (Math.floor(Date.now() / 1000) % 30);
 }
 
+export function getDisplayName(WrappedComponent) {
+	return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
 export class LocalSecretStore {
     static getAll() {
         const secrets = [];
