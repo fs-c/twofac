@@ -3,6 +3,29 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+const ListItem = ({ alias, currentCode, oldCode }) => {
+    /* const [ isActive, setIsActive ] = useState(false); */
+
+    return (
+        <ListGroup.Item className='text-light bg-inherit list-border-transition'
+            /* onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)} */
+        >
+            {/* <span className={`text-muted ${isActive ? ' in' : ''}visible`}>{alias}</span>
+            <span className={`color-rotating-inline ${isActive ? 'float-left ' : ' in'}visible`}>{alias}</span><br/> */}
+
+            <span className='text-muted'>{alias}</span>
+
+            <div className='h5 steam-code'>
+                <code>{currentCode}</code>
+
+                <code className='steam-code text-muted float-right'>
+                    {oldCode}
+                </code>
+            </div>
+        </ListGroup.Item>
+    );
+}
+
 const CodeList = ({ liveCode, remainingTime, codes }) => {
     return (<>
         {(liveCode && liveCode.current) && (
@@ -25,17 +48,8 @@ const CodeList = ({ liveCode, remainingTime, codes }) => {
         {(codes && codes.length) && (
             <ListGroup variant='flush' className='mt-4 rounded border'>
                 {codes.map((c) => (
-                    <ListGroup.Item key={c.secret} className='text-light bg-inherit list-border-transition'>
-                        <span className='text-muted'>{c.alias}</span><br/>
-
-                        <div className='h5 steam-code'>
-                            <code>{c.code.current}</code>
-
-                            <code className='steam-code text-muted float-right'>
-                                {c.code.old}
-                            </code>
-                        </div>
-                    </ListGroup.Item>
+                    <ListItem key={c.alias} alias={c.alias} currentCode={c.code.current}
+                        oldCode={c.code.old} />
                 ))}
             </ListGroup>
         )}
