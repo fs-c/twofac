@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Alert from 'react-bootstrap/Alert';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const ListItem = ({ alias, currentCode, oldCode }) => {
-    /* const [ isActive, setIsActive ] = useState(false); */
+    const [ isActive, setIsActive ] = useState(false);
 
     return (
         <ListGroup.Item className='text-light bg-inherit list-border-transition'
-            /* onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)} */
+            onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)}
         >
-            {/* <span className={`text-muted ${isActive ? ' in' : ''}visible`}>{alias}</span>
-            <span className={`color-rotating-inline ${isActive ? 'float-left ' : ' in'}visible`}>{alias}</span><br/> */}
-
-            <span className='text-muted'>{alias}</span>
+            <div className='text-muted'>
+                {alias}
+            </div>
 
             <div className='h5 steam-code'>
                 <code>{currentCode}</code>
