@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 
 import Alert from 'react-bootstrap/Alert';
+import Collapse from 'react-bootstrap/Collapse';
 import ListGroup from 'react-bootstrap/ListGroup';
 
-const ListItem = ({ alias, currentCode, oldCode }) => {
-    const [ isActive, setIsActive ] = useState(false);
-
+const ListItem = ({ alias, currentCode, oldCode, active = false, onClick = () => {} }) => {
     return (
-        <ListGroup.Item className='text-light bg-inherit list-border-transition'
-            onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)}
+        <ListGroup.Item className={`bg-inherit text-light list-border-transition`}
+            onClick={onClick}
+            style={{
+                filter: `brightness(${active ? '2' : '1'})`,
+            }}
         >
             <div className='text-muted'>
                 {alias}
@@ -23,9 +25,28 @@ const ListItem = ({ alias, currentCode, oldCode }) => {
             </div>
         </ListGroup.Item>
     );
-}
+};
 
-const CodeList = ({ liveCode, remainingTime, codes }) => {
+const CodeList = ({ liveCode, remainingTime, codes, deleteSecret }) => {
+    const [ activeItems, setActiveItems ] = useState({});
+
+    const handleItemClick = ({ alias }) => {
+        setActiveItems((active) => {
+            return { ...active, [alias]: !active[alias] };
+        });
+    };
+
+    const handleDeleteActive = () => {
+        const aliases = Object.keys(activeItems);
+        for (const alias of aliases) {
+            if (activeItems[alias] === true) {
+                activeItems[alias] = false;
+
+                deleteSecret(alias);
+            }
+        }
+    };
+
     return (<>
         {(liveCode && liveCode.current) && (
             <Alert variant='dark' className='bg-dark text-light border-light'>
@@ -48,8 +69,31 @@ const CodeList = ({ liveCode, remainingTime, codes }) => {
             <ListGroup variant='flush' className='mt-4 rounded border'>
                 {codes.map((c) => (
                     <ListItem key={c.alias} alias={c.alias} currentCode={c.code.current}
-                        oldCode={c.code.old} />
+                        oldCode={c.code.old} active={activeItems[c.alias] === true}
+                        onClick={() => handleItemClick(c)}
+                    />
                 ))}
+
+                <Collapse in={Object.values(activeItems).includes(true)}>
+                    <div>
+                        <ListGroup.Item className='bg-inherit text-light'
+                            style={{
+                                borderTop: '1px solid #dee2e6',
+                            }}
+                        >
+                            <div className='float-right mb-2'>
+                                {/* <Octicon icon={Flame} verticalAlign='top'
+                                    ariaLabel='Delete' /> */}
+
+                                <span className='link'
+                                    onClick={() => handleDeleteActive()}
+                                >
+                                    Delete
+                                </span>
+                            </div>
+                        </ListGroup.Item>
+                    </div>
+                </Collapse>
             </ListGroup>
         )}
     </>);

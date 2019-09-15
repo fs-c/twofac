@@ -27,14 +27,16 @@ code {
     letter-spacing: 1.5px;
 }
 
-a {
+a, .link {
     color: inherit;
     text-decoration: underline;
+    cursor: default;
 }
 
-a:hover {
+a:hover, .link:hover {
     color: inherit;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .color-rotating-block {
@@ -70,7 +72,7 @@ a:hover {
     border-left-color: #495057!important;
 }
 
-.list-border-transition:not(:last-child) {
+.list-border-transition:nth-last-child(n+3) {
     border-bottom: 1.5px solid transparent;
     border-image: linear-gradient(90deg, black 20%, #6c757d 100%);
     border-image-slice: 1;
@@ -86,6 +88,10 @@ a:hover {
     position: absolute;
     width: 100%
 }
+
+/* .slide-in {
+
+} */
 
 /* Bootstrap overrides */
 

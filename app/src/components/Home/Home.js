@@ -61,6 +61,12 @@ const Home = () => {
         LocalSecretStore.add(alias, secret);
     };
 
+    const deleteSecret = (alias) => {
+        LocalSecretStore.remove(alias);
+
+        setCodeListItems(populateCodeList(LocalSecretStore.getAll()));
+    };
+
     const links = {
         steamAuth: <a href='https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030'>
             Steam flavored Two-Factor Authentication
@@ -78,7 +84,7 @@ const Home = () => {
 
         <div className='mt-4'>
             <CodeList remainingTime={remainingTime} liveCode={liveCode}
-                codes={codeListItems}
+                codes={codeListItems} deleteSecret={deleteSecret}
             />
         </div>
     </>);
