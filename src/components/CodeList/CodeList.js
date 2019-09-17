@@ -37,18 +37,12 @@ const CodeList = ({ liveCode, remainingTime, codes, deleteSecret }) => {
     };
 
     const handleDeleteActive = () => {
-        const aliases = Object.keys(activeItems);
-        for (const alias of aliases) {
-            if (activeItems[alias] === true) {
-                activeItems[alias] = false;
-
-                deleteSecret(alias);
-            }
-        }
+        Object.keys(activeItems).filter((alias) => activeItems[alias])
+            .forEach((alias) => deleteSecret(alias));
     };
 
     return (<>
-        {(liveCode && liveCode.current) && (
+        {(liveCode) ? (
             <Alert variant='dark' className='bg-dark text-light border-light'>
                 Your code has been generated
                 <hr className='mt-1 mb-2' />
@@ -63,9 +57,9 @@ const CodeList = ({ liveCode, remainingTime, codes, deleteSecret }) => {
                     </code>
                 </Alert.Heading>
             </Alert>
-        )}
+        ) : null}
 
-        {(codes && codes.length) && (
+        {(codes && codes.length) ? (
             <ListGroup variant='flush' className='mt-4 rounded border'>
                 {codes.map((c) => (
                     <ListItem key={c.alias} alias={c.alias} currentCode={c.code.current}
@@ -95,7 +89,7 @@ const CodeList = ({ liveCode, remainingTime, codes, deleteSecret }) => {
                     </div>
                 </Collapse>
             </ListGroup>
-        )}
+        ) : null}
     </>);
 };
 
