@@ -1,5 +1,5 @@
 ### `twofac`
 
-This branch houses a rewrite of twofac, hosted at [twofac.now.sh](https://twofac.now.sh) ([twofac.fsoc.now.sh](https://twofac.fsoc.now.sh) for canary builds). 
+A web implementation of [Steam flavored Two-Factor Authentication](https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030).
 
-The code of the old (online DB backed) version can be found in the [`old-master`](https://github.com/LW2904/twofac/tree/old-master) branch.
+The `server` subfolder is unused and the React app which lives in `src` does not communicate with any server whatsoever. 
