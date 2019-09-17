@@ -16,7 +16,9 @@ const generateCodeTuple = (secret) => {
 
 const populateCodeList = (list) => {
     if (!list || !list.length) {
-        return;
+        console.error('list', list);
+
+        return [];
     }
 
     return list.map((e) => {
