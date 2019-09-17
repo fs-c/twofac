@@ -15,7 +15,7 @@ const generateCodeTuple = (secret) => {
 };
 
 const populateCodeList = (list) => {
-    if (!list || !list.length) {
+    if (!list) {
         console.error('list', list);
 
         return [];
@@ -39,7 +39,9 @@ const Home = () => {
     useInterval(() => {
         // If it was reset in the last tick
         if (remainingTime === 1) {
-            setLiveCode(generateCodeTuple(liveSecret));
+            if (liveSecret) {
+                setLiveCode(generateCodeTuple(liveSecret));
+            }
 
             setCodeListItems(populateCodeList(codeListItems));
         }
@@ -48,7 +50,9 @@ const Home = () => {
     }, 1000);
 
     useEffect(() => {
-        setLiveCode(generateCodeTuple(liveSecret));
+        if (liveSecret) {
+            setLiveCode(generateCodeTuple(liveSecret));
+        }
 
         setCodeListItems(populateCodeList(LocalSecretStore.getAll()));
     }, [ liveSecret ]);
