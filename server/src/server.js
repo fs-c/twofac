@@ -27,6 +27,9 @@ fastify.register(require('fastify-cors'), {
     origin: true,
 });
 
+fastify.register(require('./database').connector,
+    config.resourceServer.mongoDB);
+
 // TODO: Add schema to error and not found handler responses
 
 fastify.setErrorHandler(async (err, req, res) => {
