@@ -38,5 +38,6 @@ module.exports = async (fastify, opts) => {
         },
     }));
 
-    fastify.register(require('./routes/code'), { prefix: 'code' });
+    fastify.register(require('./routes/auth'));
+    // fastify.register(require('./routes/code'), { prefix: 'code' });
 };
