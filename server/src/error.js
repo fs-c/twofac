@@ -5,4 +5,9 @@ const UserError = exports.UserError = class extends Error {
         this.statusCode = statusCode;
         this.userMessage = userMessage;
     }
+
+    static consolidate(original, userError) {
+        return new UserError(original.userMessage || userError.userMessage,
+            original.statusCode || userError.statusCode, userError.message);
+    }
 }
