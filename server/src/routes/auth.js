@@ -19,15 +19,14 @@ module.exports = async (fastify, opts) => {
         },
     }, async (req) => {
         try {
-            const { username, password } = req.body;
-
+            const { username } = req.body;
             if (await User.findOne({ name: username })) {
                 throw new UserError('User already exists', 400);
             }
 
-            const hashedPassword = await hash.generate(password);
+            const hashedPassword = await hash.generate(req.body.password);
 
-            delete password;
+            delete req.body.password;
 
             const user = await (new User({
                 name: username,
@@ -35,7 +34,9 @@ module.exports = async (fastify, opts) => {
                 secrets: [],
             })).save();
 
-            return { status: { success: true }, user };
+            return { status: { success: true }, token: await res.jwtSign({
+                name: user.name,
+            }, { expiresIn: '2h' }) };
         } catch (err) {
             return UserError.consolidate(
                 err, new UserError('Signup error', 500, err.message)
@@ -49,22 +50,22 @@ module.exports = async (fastify, opts) => {
         },
     }, async (req, res) => {
         try {
-            const { username, password } = req.body;
+            const { username } = req.body;
             const user = await User.findOne({ name: username });
 
             if (!user) {
                 throw new UserError('Invalid information', 400);
             }
 
-            const hashedPassword = await hash.generate(password);
-
-            delete password;
-
-            if (!(await hash.verify(user.password, password))) {
+            if (!(await hash.verify(user.password, req.body.password))) {
                 throw new UserError('Invalid information', 400);
             }
 
-            return { status: { success: true } };
+            delete req.body.password;
+
+            return { status: { success: true }, token: await res.jwtSign({
+                name: user.name,
+            }, { expiresIn: '2h' }) };
         } catch (err) {
             return UserError.consolidate(
                 err, new UserError('Signin error', 500, err.message)
