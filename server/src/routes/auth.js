@@ -1,26 +1,23 @@
-const { hash } = require('../crypto');
 const { UserError } = require('../error');
-
-const userBody = {
-    type: 'object',
-    properties: {
-        username: { type: 'string' },
-        password: { type: 'string' },
-    },
-    required: [ 'username', 'password' ],
-};
+const { hash, validate } = require('../crypto');
 
 module.exports = async (fastify, opts) => {
     const { User } = fastify.database;
 
     fastify.post('/signup', {
         schema: {
-            body: userBody,
+            body: {
+                type: 'object',
+                properties: {
+                    username: { type: 'string' },
+                    password: { type: 'string' },
+                },
+                required: [ 'username', 'password' ],
+            },
         },
     }, async (req) => {
         try {
-            const { username } = req.body;
-            if (await User.findOne({ name: username })) {
+            if (await User.findOne({ name: req.body.username })) {
                 throw new UserError('User already exists', 400);
             }
 
@@ -46,21 +43,24 @@ module.exports = async (fastify, opts) => {
 
     fastify.post('/signin', {
         schema: {
-            body: userBody,            
+            body: {
+                type: 'object',
+                properties: {
+                    username: { type: 'string' },
+                    password: { type: 'string' },
+                },
+                required: [ 'username', 'password' ],
+            },            
         },
     }, async (req, res) => {
         try {
-            const { username } = req.body;
-            const user = await User.findOne({ name: username });
+            const user = await User.findOne({ name: req.body.username });
 
             if (!user) {
                 throw new UserError('Invalid information', 400);
             }
 
-            if (!(await hash.verify(user.password, req.body.password))) {
-                throw new UserError('Invalid information', 400);
-            }
-
+            await validate(req.body.password, user.password)
             delete req.body.password;
 
             return { status: { success: true }, token: await res.jwtSign({

@@ -13,6 +13,12 @@ const hash = exports.hash = {
     verify: (hash, plain) => argon2.verify(hash, plain, argonOptions),
 };
 
+const validate = exports.validate = async (plain, hashed) => {
+    if (!(await hash.verify(hashed, plain))) {
+        throw new UserError('Invalid information', 400);
+    }
+}
+
 const authenticate = exports.authenticate = fp(async (fastify, opts) => {
     if (!process.env.JWT_SECRET) {
         throw new Error('JWT_SECRET env not provided');
@@ -23,11 +29,21 @@ const authenticate = exports.authenticate = fp(async (fastify, opts) => {
     });
 
     fastify.decorate('user', {});
+    fastify.decorate('account', {});
     fastify.decorate('authenticate', async (req, res) => {
         try {
             fastify.user = await req.jwtVerify();
+            fastify.account = await fastify.database.User.findOne({
+                name: fastify.user.name
+            });
+
+            if (!fastify.account) {
+                throw new UserError('User not found');
+            }
         } catch (err) {
-            throw new UserError('Invalid token', 403, err.message);
+            throw UserError.consolidate(
+                err, new UserError('Invalid token', 403, err.message),
+            );
         }
     });
 });

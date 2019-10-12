@@ -1,9 +1,8 @@
+const fp = require('fastify-plugin');
 const { UserError } = require('../error');
-const { encipher, decipher, hash } = require('../crypto');
+const { encipher, decipher, validate } = require('../crypto');
 
 module.exports = async (fastify, opts) => {
-    const { User } = fastify.database;
-
     fastify.post('/get', {
         schema: {
             body: {
@@ -15,22 +14,17 @@ module.exports = async (fastify, opts) => {
         },
         preValidation: [ fastify.authenticate ],
     }, async (req, res) => {
-        const user = (await User.findOne({
-            name: fastify.user.name,
-        }) || {});
-
-        const { password } = req.body;
-        if (!(await hash.verify(user.password, req.body.password))) {
-            throw new UserError('Invalid password');
-        }
+        await validate(req.body.password, fastify.account.password);
 
         const decrypted = [];
-        for (const secret of user.secrets) {
+        for (const secret of fastify.account.secrets) {
             decrypted.push(await decipher(
-                secret.raw, password, secret.salt,
+                secret.raw, req.body.password, secret.salt,
                 secret.vector,
             ));
         }
+
+        delete req.body.password;
 
         return { status: { success: true }, secrets: decrypted };
     });
@@ -49,31 +43,25 @@ module.exports = async (fastify, opts) => {
         },
         preValidation: [ fastify.authenticate ],
     }, async (req, res) => {
-        const user = (await User.findOne({
-            name: fastify.user.name,
-        }) || {});
-
         const { alias } = req.body;
-        if (user.secrets.map((s) => s.alias).includes(alias)) {
+        if (fastify.account.secrets.map((s) => s.alias).includes(alias)) {
             throw new UserError('Alias already exists');
         }
 
-        const { password } = req.body;
-        if (!(await hash.verify(user.password, req.body.password))) {
-            throw new UserError('Invalid password');
-        }
+        await validate(req.body.password, fastify.account.password);
 
-        const { secret } = req.body;
-        const { encrypted, salt, vector } = await encipher(secret, password);
+        const { encrypted, salt, vector } = await encipher(req.body.secret,
+            req.body.password);
 
+        delete req.body.secret;
         delete req.body.password;
 
-        user.secrets.push({
+        fastify.account.secrets.push({
             raw: encrypted,
-            alias, salt, vector,
+            alias: alias, salt, vector,
         });
 
-        await user.save();
+        await fastify.account.save();
 
         return { status: { success: true } };
     });
@@ -90,17 +78,14 @@ module.exports = async (fastify, opts) => {
         },
         preValidation: [ fastify.authenticate ],
     }, async (req, res) => {
-        const user = (await User.findOne({
-            name: fastify.user.name,
-        }) || {});
+        const { length } = fastify.account.secrets;
+        fastify.account.secrets = fastify.account.secrets.filter(
+            (s) => s.alias !== req.body.alias
+        );
 
-        const { alias } = req.body;
-        const { length } = user.secrets;
-        user.secrets = user.secrets.filter((s) => s.alias !== alias);
+        await fastify.account.save();
 
-        await user.save();
-
-        const deleted = length - user.secrets.length;
+        const deleted = length - fastify.account.secrets.length;
         return { status: { success: deleted !== 0, deleted } };
     });
 };
