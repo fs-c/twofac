@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Switch, Route } from 'wouter';
+import { Switch, Route, Link } from 'wouter';
+
+const Navigation = () => (
+    <>
+        <Link href='/'>twofac</Link>
+        <Link href='/what?'>what?</Link>
+        <Link href='/contact'>contact</Link>
+    </>
+);
 
 const Home = () => (
     <p>
@@ -27,13 +35,17 @@ const NotFound = () => (
 );
 
 const App = () => (
-    <Switch>
-        <Route path='/' component={Home} />
-        <Route path='/what' component={What} />
-        <Route path='/contact' component={Contact} />
+    <>
+        <Navigation />
 
-        <Route path='/:nonexistent*' component={NotFound} />
-    </Switch>
+        <Switch>
+            <Route path='/' component={Home} />
+            <Route path='/what' component={What} />
+            <Route path='/contact' component={Contact} />
+
+            <Route path='/:nonexistent*' component={NotFound} />
+        </Switch>
+    </>
 );
 
 export default App;
