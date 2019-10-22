@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App/App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
-// TODO: Add CSS tree shaking to the build process
+// TODO: Remove and replace this dependency
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
