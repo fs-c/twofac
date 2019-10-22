@@ -11,10 +11,6 @@ export function getBaseName() {
 }
 
 export function generateMobileCode(secret, offset = 0) {
-    /* if (secret.length !== 28 || secret[secret.length - 1] !== '=') {
-        throw new Error('Malformed secret');
-    } */
-
     if (!secret) {
         return '';
     }
