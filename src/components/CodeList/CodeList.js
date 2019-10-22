@@ -37,6 +37,8 @@ const CodeList = ({ liveCode, remainingTime, codes, deleteSecret }) => {
     };
 
     const handleDeleteActive = () => {
+        setActiveItems([]);
+
         Object.keys(activeItems).filter((alias) => activeItems[alias])
             .forEach((alias) => deleteSecret(alias));
     };
