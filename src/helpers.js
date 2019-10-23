@@ -63,6 +63,10 @@ export class LocalSecretStore {
         return secrets;
     }
 
+    static get(alias) {
+        return localStorage.getItem(alias);
+    }
+
     static add(alias, secret) {
         localStorage.setItem(alias, secret);
     }
