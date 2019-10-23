@@ -4,25 +4,11 @@ import Header from './Header';
 import { Container } from './lib/utils';
 import { Switch, Route, Redirect } from 'wouter';
 
+import Home from '../pages/Home';
+import What from '../pages/What';
+import Contact from '../pages/Contact';
+
 import { createGlobalStyle } from 'styled-components';
-
-const Home = () => (
-    <p>
-        Hello world
-    </p>
-);
-
-const What = () => (
-    <p>
-        What?
-    </p>
-);
-
-const Contact = () => (
-    <p>
-        Contact
-    </p>
-);
 
 const GlobalStyle = createGlobalStyle`
     :root {
