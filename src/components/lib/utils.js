@@ -6,6 +6,9 @@ export const Container = styled.div`
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+
+    display: flex;
+    flex-direction: column;
 `;
 
 export const VerticalSpacer = styled.div`
