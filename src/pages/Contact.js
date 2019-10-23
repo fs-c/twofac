@@ -3,7 +3,7 @@ import React from 'react';
 const links = {
     email: 'mailto:root@fsoc.space',
     steam: 'http://steamcommunity.com/profiles/76561198091491690',
-}
+};
 
 const Contact = () => (
     <>
