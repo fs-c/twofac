@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from './Header';
+import CSSReset from './lib/CSSReset';
 import { Container } from './lib/utils';
 import { Switch, Route, Redirect } from 'wouter';
 
@@ -26,11 +27,15 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        color: var(--foreground)!important;
-        background-color: var(--background)!important;
+        color: var(--foreground);
+        background-color: var(--background);
     }
 
-    a { color: inherit }
+    a {
+        color: inherit
+        text-decoration: underline;
+    }
+
     a:hover {
         color: inherit;
         text-decoration: none;
@@ -39,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => (
     <>
+        <CSSReset />
         <GlobalStyle />
 
         <Container>
