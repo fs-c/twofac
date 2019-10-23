@@ -1,25 +1,10 @@
 import React from 'react';
 
-import Navigation from './lib/Navigation';
+import Header from './Header';
 import { Switch, Route } from 'wouter';
-import { Container, VerticalSpacer } from './lib/utils';
+import { Container } from './lib/utils';
 
 import { createGlobalStyle } from 'styled-components';
-
-const Header = () => (
-    <>
-        <VerticalSpacer height={5} />
-
-        <Navigation>
-            <Navigation.Main href='/'>twofac</Navigation.Main>
-            <Navigation.Divider />
-            <Navigation.Item href='/what?'>what?</Navigation.Item>
-            <Navigation.Item href='/contact'>contact</Navigation.Item>
-        </Navigation>
-
-        <VerticalSpacer height={4} />
-    </>
-);
 
 const Home = () => (
     <p>
