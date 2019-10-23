@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Header from './Header';
-import { Switch, Route } from 'wouter';
 import { Container } from './lib/utils';
+import { Switch, Route, Redirect } from 'wouter';
 
 import { createGlobalStyle } from 'styled-components';
 
@@ -21,12 +21,6 @@ const What = () => (
 const Contact = () => (
     <p>
         Contact
-    </p>
-);
-
-const NotFound = () => (
-    <p>
-        Not Found
     </p>
 );
 
@@ -69,7 +63,7 @@ const App = () => (
                 <Route path='/what' component={What} />
                 <Route path='/contact' component={Contact} />
 
-                <Route path='/:nonexistent*' component={NotFound} />
+                <Route path='/:nonexistent*'><Redirect to='/' /></Route>
             </Switch>
         </Container>
     </>
