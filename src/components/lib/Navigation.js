@@ -27,8 +27,10 @@ const NavigationItem = styled(Link)`
 `;
 
 const NavigationMain = styled(NavigationItem)`
-    color: var(--background);
-    background-color: var(--foreground);
+    color: var(--foreground);
+    box-shadow: 4px 4px var(--highlight);
+    background-color: var(--background);
+    border: 1px solid var(--foreground);
 
     font-weight: bolder;
     text-decoration: none;
@@ -38,8 +40,8 @@ const NavigationMain = styled(NavigationItem)`
     transition-duration: 0.2s;
 
     :hover {
-        color: var(--background);
-        transform: skew(0deg);
+        color: var(--foreground);
+        box-shadow: 6px 6px var(--highlight);
     }
 `;
 
