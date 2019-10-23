@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 
-export const scale = (x) => Math.pow(2, x);
+export const scale = (x) => x * 4;
 
-export const Container = styled.div`
+export const Flex = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: ${({ direction }) => direction || 'column'};
+`;
+
+export const Container = styled(Flex)`
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
-
-    display: flex;
-    flex-direction: column;
 `;
 
 export const VerticalSpacer = styled.div`
