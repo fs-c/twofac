@@ -27,15 +27,16 @@ const NavigationItem = styled(Link)`
 `;
 
 const NavigationMain = styled(NavigationItem)`
-    color: var(--foreground);
+    transform: skew(-5deg);
+    padding: 0 0.3em 0 0.3em;
     box-shadow: 4px 4px var(--highlight);
-    background-color: var(--background);
     border: 1px solid var(--foreground);
 
     font-weight: bolder;
     text-decoration: none;
-    transform: skew(-5deg);
-    padding: 0 0.3em 0 0.3em;
+    color: var(--foreground);
+    background-color: var(--background);
+
 
     transition-duration: 0.2s;
 

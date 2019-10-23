@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
+    display: inline-block;
+    padding: 0.4em 0.7em;
+
     font-size: 1rem;
     line-height: 1.5;
     text-align: center;
-    display: inline-block;
-    padding: 0.4em 0.7em;
-    background-color: var(--background);
     color: var(--foreground);
-    border: 1px solid var(--accents-6);
-    border-radius: 5px;
+    background-color: var(--background);
+
     outline: none;
+    border-radius: 5px;
+    border: 1px solid var(--accents-6);
 
     transition: 0.2s;
 
