@@ -38,11 +38,11 @@ const NavigationMain = styled(NavigationItem)`
     background-color: var(--background);
 
 
-    transition-duration: 0.2s;
+    transition-duration: 0.4s;
 
     :hover {
         color: var(--foreground);
-        box-shadow: 6px 6px var(--highlight);
+        box-shadow: -4px -4px var(--highlight);
     }
 `;
 
