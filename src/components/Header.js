@@ -10,8 +10,8 @@ const Header = () => (
         <Navigation>
             <Navigation.Main href='/'>twofac</Navigation.Main>
             <Navigation.Divider />
-            <Navigation.Item href='/what?'>what?</Navigation.Item>
-            <Navigation.Item href='/contact'>contact</Navigation.Item>
+            <Navigation.Item href='/what?'>/what?</Navigation.Item>
+            <Navigation.Item href='/contact'>/contact</Navigation.Item>
         </Navigation>
 
         <VerticalSpacer height={4} />

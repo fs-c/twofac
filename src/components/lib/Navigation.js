@@ -22,7 +22,7 @@ const NavigationItem = styled(Link)`
     }
 
     :not(:last-child) {
-        margin-right: 1em;
+        margin-right: 0.5em;
     }
 `;
 
