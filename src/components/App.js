@@ -35,7 +35,11 @@ const GlobalStyle = createGlobalStyle`
 
         /* Required for footer */
         min-height: 100vh;
+
+        padding: 0 1em 0 1em;
     }
+
+    * { outline-color: var(--highlight); }
 
     /* Required for footer */
     #root { min-height: inherit; }
