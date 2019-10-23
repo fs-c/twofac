@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from './Header';
+import Footer from './Footer';
 import CSSReset from './lib/CSSReset';
 import { Container } from './lib/utils';
 import { Switch, Route, Redirect } from 'wouter';
@@ -9,7 +10,7 @@ import Home from '../pages/Home';
 import What from '../pages/What';
 import Contact from '../pages/Contact';
 
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
     :root {
@@ -24,12 +25,20 @@ const GlobalStyle = createGlobalStyle`
         --accents-3: #444444;
         --accents-2: #333333;
         --accents-1: #111111;
+
+        --highlight: #FF0080;
     }
 
     body {
         color: var(--foreground);
         background-color: var(--background);
+
+        /* Required for footer */
+        min-height: 100vh;
     }
+
+    /* Required for footer */
+    #root { min-height: inherit; }
 
     a {
         color: inherit
@@ -42,12 +51,17 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
+/* Required for footer */
+const GlobalContainer = styled(Container)`
+    min-height: inherit;
+`;
+
 const App = () => (
     <>
         <CSSReset />
         <GlobalStyle />
 
-        <Container>
+        <GlobalContainer>
             <Header />
 
             <Switch>
@@ -57,7 +71,9 @@ const App = () => (
 
                 <Route path='/:nonexistent*'><Redirect to='/' /></Route>
             </Switch>
-        </Container>
+
+            <Footer />
+        </GlobalContainer>
     </>
 );
 
