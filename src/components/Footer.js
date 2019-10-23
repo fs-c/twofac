@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Footer = styled.footer`
     margin-top: auto;
     text-align: center;
-    margin-bottom: ${scale(4)}px;
+    margin-bottom: ${scale(5)}px;
     padding-top: ${scale(4)}px;
 
     color: var(--accents-4);
