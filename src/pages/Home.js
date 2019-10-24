@@ -17,6 +17,12 @@ const Home = () => {
         setList(LocalSecretStore.getAll());
     }, []);
 
+    const onSecretSave = (item) => {
+        setList((prev) => prev.concat([ item ]));
+
+        LocalSecretStore.add(item.alias, item.secret);
+    };
+
     return (
         <>
             <p>
@@ -26,7 +32,7 @@ const Home = () => {
 
             <VerticalSpacer height={4} />
 
-            <SecretInput onSave={(item) => setList((prev) => prev.concat([ item ]))} />
+            <SecretInput onSave={onSecretSave} />
 
             <VerticalSpacer height={4} />
 

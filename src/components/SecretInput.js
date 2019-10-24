@@ -19,8 +19,6 @@ const SecretInput = ({ onSave }) => {
             return;
         }
 
-        LocalSecretStore.add(alias, secret);
-
         onSave({ alias, secret });
     };
 
