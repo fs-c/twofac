@@ -13,6 +13,8 @@ const ListItem = styled.li`
     border-left: 1px solid var(--accents-6);
     border-right: 1px solid var(--accents-6);
 
+    background-color: ${({ active }) => active ? 'var(--accents-1)' : 'inherit'};
+
     :hover {
         background-color: var(--accents-1);
     }
