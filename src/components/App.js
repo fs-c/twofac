@@ -26,7 +26,12 @@ const GlobalStyle = createGlobalStyle`
         --accents-2: #333333;
         --accents-1: #111111;
 
+        --error: #E60000;
         --highlight: #FF0080;
+    }
+
+    ::selection {
+        background-color: var(--highlight);
     }
 
     body {
