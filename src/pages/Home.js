@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import SecretInput from '../components/SecretInput';
 import { VerticalSpacer } from '../components/lib/utils';
+import { UpdatingCodeList } from '../components/CodeList';
 
 import { LocalSecretStore } from '../helpers';
 
@@ -26,6 +27,8 @@ const Home = () => {
             <VerticalSpacer height={4} />
 
             <SecretInput onSave={(item) => setList((prev) => prev.concat([ item ]))} />
+
+            <UpdatingCodeList list={list} />
         </>
     )
 };
