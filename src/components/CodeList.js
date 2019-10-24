@@ -5,7 +5,7 @@ import { Flex } from '../components/lib/utils';
 import Octicon, { X } from '@primer/octicons-react';
 
 import styled from 'styled-components';
-import { generateMobileCode } from '../helpers';
+import { generateMobileCode, useInterval, getRemainingTime } from '../helpers';
 
 const generateCodeTuple = (secret) => ({
     old: generateMobileCode(secret, -30),
@@ -73,12 +73,22 @@ const CodeList = ({ codes, onDelete }) => {
 export const UpdatingCodeList = ({ list, onDelete }) => {
     const [ codes, setCodes ] = useState({});
 
+    const generateCodes = (list) => list.reduce((acc, cur) => {
+        acc[cur.alias] = generateCodeTuple(cur.secret);
+        return acc;
+    }, {})
+
+    // Initialize codes object, this only ever runs on master list change
     useEffect(() => {
-        setCodes(list.reduce((acc, cur) => {
-            acc[cur.alias] = generateCodeTuple(cur.secret);
-            return acc;
-        }, {}));
+        setCodes(generateCodes(list));
     }, [ list ]);
+
+    useInterval(() => {
+        // If it was reset (ergo time == 30) in the last tick
+        if (getRemainingTime() === 1) {
+            setCodes(generateCodes(list));
+        }
+    }, 1000);
 
     return (
         <CodeList codes={codes} onDelete={onDelete} />
