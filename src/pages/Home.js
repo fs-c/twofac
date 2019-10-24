@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import SecretInput from '../components/SecretInput';
 import { VerticalSpacer } from '../components/lib/utils';
