@@ -29,6 +29,11 @@ const ListItem = styled.li`
         border-radius: 0 0 5px 5px;
         border-bottom: 1px solid var(--accents-6);
     }
+
+    /* TODO: Solve more elegantly */
+    :first-child:last-child {
+        border-radius: 5px 5px 5px 5px;
+    }
 `;
 
 List.Item = ListItem;
