@@ -15,6 +15,8 @@ const ListItem = styled.li`
 
     background-color: ${({ active }) => active ? 'var(--accents-1)' : 'inherit'};
 
+    cursor: pointer;
+
     :hover {
         background-color: var(--accents-1);
     }
