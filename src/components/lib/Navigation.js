@@ -38,7 +38,7 @@ const NavigationMain = styled(NavigationItem)`
     background-color: var(--background);
 
 
-    transition-duration: 0.4s;
+    transition-duration: 0.3s;
 
     :hover {
         color: var(--foreground);
