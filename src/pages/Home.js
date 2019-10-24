@@ -28,6 +28,8 @@ const Home = () => {
 
             <SecretInput onSave={(item) => setList((prev) => prev.concat([ item ]))} />
 
+            <VerticalSpacer height={4} />
+
             <UpdatingCodeList list={list} />
         </>
     )
