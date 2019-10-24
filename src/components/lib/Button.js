@@ -7,7 +7,7 @@ const Button = styled.button`
     font-size: 1rem;
     line-height: 1.5;
     text-align: center;
-    color: var(--foreground);
+    color: var(--accents-6);
     background-color: var(--background);
 
     outline: none;
@@ -17,16 +17,18 @@ const Button = styled.button`
     transition: 0.2s;
 
     :focus {
-        border: 1px solid var(--accents-8);
+        background-color: var(--accents-1);
     }
 
     :hover {
         cursor: pointer;
-        border: 1px solid var(--accents-8);
+        color: var(--accents-7);
+        background-color: var(--accents-1);
     }
 `;
 
 const SplitButton = styled(Button)`
+    border-left: 0px solid transparent;
     border-radius: 0 5px 5px 0;
 `;
 
