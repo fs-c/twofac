@@ -12,7 +12,7 @@ const generateCodeTuple = (secret) => ({
     current: generateMobileCode(secret),
 });
 
-const CodeList = ({ codes }) => {
+const CodeList = ({ codes, onDelete }) => {
     const Alias = styled.span`
         color: var(--accents-6);
     `;
@@ -45,12 +45,12 @@ const CodeList = ({ codes }) => {
 
     return (
         <List>
-            {Object.keys(codes).map((alias) => (
+            {Object.keys(codes).sort().map((alias) => (
                 <List.Item key={alias}>
                     <ItemRow>
                         <Alias>{alias}</Alias>
 
-                        <DeleteButton as='button'>
+                        <DeleteButton as='button' onClick={() => onDelete(alias)}>
                             <Octicon icon={X} verticalAlign='middle' />
                         </DeleteButton>
                     </ItemRow>
@@ -70,19 +70,18 @@ const CodeList = ({ codes }) => {
     );
 };
 
-export const UpdatingCodeList = ({ list }) => {
+export const UpdatingCodeList = ({ list, onDelete }) => {
     const [ codes, setCodes ] = useState({});
 
     useEffect(() => {
         setCodes(list.reduce((acc, cur) => {
-            console.log(cur);
             acc[cur.alias] = generateCodeTuple(cur.secret);
             return acc;
         }, {}));
     }, [ list ]);
 
     return (
-        <CodeList codes={codes} />
+        <CodeList codes={codes} onDelete={onDelete} />
     );
 };
 

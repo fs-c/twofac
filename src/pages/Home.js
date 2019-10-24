@@ -11,16 +11,16 @@ const links = {
 };
 
 const Home = () => {
-    const [ list, setList ] = useState([]);
-
-    useEffect(() => {
-        setList(LocalSecretStore.getAll());
-    }, []);
+    const [ list, setList ] = useState(LocalSecretStore.getAll());
 
     const onSecretSave = (item) => {
         setList((prev) => prev.concat([ item ]));
-
         LocalSecretStore.add(item.alias, item.secret);
+    };
+
+    const onSecretDelete = (alias) => {
+        setList((prev) => prev.filter((item) => item.alias !== alias));
+        LocalSecretStore.remove(alias);
     };
 
     return (
@@ -36,7 +36,7 @@ const Home = () => {
 
             <VerticalSpacer height={4} />
 
-            <UpdatingCodeList list={list} />
+            <UpdatingCodeList list={list} onDelete={onSecretDelete} />
         </>
     )
 };
