@@ -17,3 +17,9 @@ export const Container = styled(Flex)`
 export const VerticalSpacer = styled.div`
     height: ${({ height }) => `${typeof height === 'string' ? height : Math.pow(2, height) + 'px'}`};
 `;
+
+export const Label = styled.small`
+    font-size: 80%;
+    padding: 0.3em 0;
+    color: var(--accents-6);
+`;

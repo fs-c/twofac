@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 
-import Label from '../components/lib/Label';
 import Input from '../components/lib/Input';
 import Button from '../components/lib/Button';
-import { Flex, VerticalSpacer } from '../components/lib/utils';
+import { Label, Flex, VerticalSpacer } from '../components/lib/utils';
 
 import { LocalSecretStore } from '../helpers';
 

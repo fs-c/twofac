@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import Label from '../components/lib/Label';
 import List from '../components/lib/List';
 import Card from '../components/lib/Card';
-import { Flex } from '../components/lib/utils';
 import Octicon, { X } from '@primer/octicons-react';
+import { Label, Flex } from '../components/lib/utils';
 
 import styled from 'styled-components';
 import { generateMobileCode, useInterval, getRemainingTime } from '../helpers';
