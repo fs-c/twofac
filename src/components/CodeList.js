@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import Label from '../components/lib/Label';
 import List from '../components/lib/List';
+import Card from '../components/lib/Card';
 import { Flex } from '../components/lib/utils';
 import Octicon, { X } from '@primer/octicons-react';
 
@@ -43,30 +45,39 @@ const CodeList = ({ codes, onDelete }) => {
         color: var(--${({ main }) => main ? 'foreground' : 'accents-6'});
     `;
 
+    const aliases = Object.keys(codes);
+
     return (
-        <List>
-            {Object.keys(codes).sort().map((alias) => (
-                <List.Item key={alias}>
-                    <ItemRow>
-                        <Alias>{alias}</Alias>
+        aliases.length ? (
+            <List>
+                {aliases.sort().map((alias) => (
+                    <List.Item key={alias}>
+                        <ItemRow>
+                            <Alias>{alias}</Alias>
 
-                        <DeleteButton as='button' onClick={() => onDelete(alias)}>
-                            <Octicon icon={X} verticalAlign='middle' />
-                        </DeleteButton>
-                    </ItemRow>
+                            <DeleteButton as='button' onClick={() => onDelete(alias)}>
+                                <Octicon icon={X} verticalAlign='middle' />
+                            </DeleteButton>
+                        </ItemRow>
 
-                    <ItemRow>
-                        <div>
-                            <Code main>{codes[alias].current}</Code>
-                        </div>
+                        <ItemRow>
+                            <div>
+                                <Code main>{codes[alias].current}</Code>
+                            </div>
 
-                        <div>
-                            <Code>{codes[alias].old}</Code>
-                        </div>
-                    </ItemRow>
-                </List.Item>
-            ))}
-        </List>
+                            <div>
+                                <Code>{codes[alias].old}</Code>
+                            </div>
+                        </ItemRow>
+                    </List.Item>
+                ))}
+            </List>
+        ) : (
+            <Card>
+                <b>Your locally saved secrets appear here.</b><br />
+                <Label>To move them to the server, sign in below.</Label>
+            </Card>
+        )
     );
 };
 
