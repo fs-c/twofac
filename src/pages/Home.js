@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import SecretInput from '../components/SecretInput';
-import { VerticalSpacer } from '../components/lib/utils';
 import { UpdatingCodeList } from '../components/CodeList';
+import { RunningText, VerticalSpacer } from '../components/lib/utils';
 
 import { LocalSecretStore } from '../helpers';
 
@@ -25,10 +25,10 @@ const Home = () => {
 
     return (
         <>
-            <p>
+            <RunningText>
                 A web implementation of the <a href={links.steamGuard}>Steam Guard Mobile 
                 Authenticator</a>.
-            </p>
+            </RunningText>
 
             <VerticalSpacer height={4} />
 

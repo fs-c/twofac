@@ -23,3 +23,7 @@ export const Label = styled.small`
     padding: 0.3em 0;
     color: var(--accents-6);
 `;
+
+export const RunningText = styled.p`
+    color: var(--accents-7);
+`;
