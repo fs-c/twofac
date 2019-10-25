@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import List from '../components/lib/List';
-import Card from '../components/lib/Card';
 import Octicon, { X } from '@primer/octicons-react';
 import { Label, Flex } from '../components/lib/utils';
 
@@ -44,6 +43,14 @@ const CodeList = ({ codes, onDelete }) => {
         color: var(--${({ main }) => main ? 'foreground' : 'accents-6'});
     `;
 
+    const EmptyList = styled.div`
+        padding: 1em;
+        text-align: center;
+        border-radius: 5px;
+        color: var(--accents-6);
+        border: 1px solid var(--accents-6);
+    `;
+
     const aliases = Object.keys(codes);
 
     return (
@@ -72,10 +79,10 @@ const CodeList = ({ codes, onDelete }) => {
                 ))}
             </List>
         ) : (
-            <Card>
+            <EmptyList>
                 <b>Your locally saved secrets appear here.</b><br />
                 <Label>To move them to the server, sign in below.</Label>
-            </Card>
+            </EmptyList>
         )
     );
 };
