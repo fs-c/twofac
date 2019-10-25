@@ -19,6 +19,9 @@ const SecretInput = ({ onSave }) => {
             return;
         }
 
+        setAlias('');
+        setSecret('');
+
         onSave({ alias, secret });
     };
 
