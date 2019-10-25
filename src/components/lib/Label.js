@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-// TODO: Semantic HTML element
-const Label = styled.div`
+const Label = styled.small`
     font-size: 80%;
     padding: 0.3em 0;
     color: var(--accents-6);
