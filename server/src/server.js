@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const config = require('../../.config');
+const config = require('../../src/.config');
 const inProd = exports.inProd = process.env.NODE_ENV === 'production';
 
 const log = exports.log = require('pino')(inProd ? {
