@@ -48,11 +48,16 @@ export function getDisplayName(WrappedComponent) {
 }
 
 export class LocalSecretStore {
+    static prefix = 'secret_';
+
     static getAll() {
         const secrets = [];
 
         for (let i = 0; i < localStorage.length; i++) {
             const alias = localStorage.key(i);
+
+            if (!alias.includes(LocalSecretStore.prefix))
+                continue;
 
             secrets.push({
                 alias,
@@ -64,18 +69,14 @@ export class LocalSecretStore {
     }
 
     static get(alias) {
-        return localStorage.getItem(alias);
+        return localStorage.getItem(LocalSecretStore.prefix + alias);
     }
 
     static add(alias, secret) {
-        localStorage.setItem(alias, secret);
+        localStorage.setItem(LocalSecretStore.prefix + alias, secret);
     }
 
     static remove(alias) {
-        localStorage.removeItem(alias);
-    }
-
-    static clear() {
-        localStorage.clear();
+        localStorage.removeItem(LocalSecretStore.prefix + alias);
     }
 }
