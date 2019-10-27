@@ -27,3 +27,14 @@ export const Label = styled.small`
 export const RunningText = styled.p`
     color: var(--accents-7);
 `;
+
+export const Error = styled.div`
+    padding: 0.5em 0.8em 0.5em 0.8em;
+    border-radius: 5px;
+    color: var(--accents-7);
+    border: 1px solid var(--error);
+
+    & span {
+        color: var(--accents-6);
+    }
+`;
