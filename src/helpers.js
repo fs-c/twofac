@@ -50,6 +50,10 @@ export function getDisplayName(WrappedComponent) {
 export class LocalSecretStore {
     static prefix = 'secret_';
 
+    static parseAlias(alias) {
+        return alias.split(LocalSecretStore.prefix)[1];
+    }
+
     static getAll() {
         const secrets = [];
 
@@ -60,7 +64,7 @@ export class LocalSecretStore {
                 continue;
 
             secrets.push({
-                alias,
+                alias: LocalSecretStore.parseAlias(alias),
                 secret: localStorage.getItem(alias),
             });
         }
