@@ -34,7 +34,7 @@ const Login = ({ onLogin }) => {
         <LoginContainer>
             {error && (
                 <>
-                    <Error>
+                    <Error onClose={() => setError(null)}>
                         <b>{error.message}</b>
                         {error.details && <span><br />{error.details}</span>}
                     </Error>

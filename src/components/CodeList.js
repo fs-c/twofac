@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import List from '../components/lib/List';
-import { Flex } from '../components/lib/utils';
 import Octicon, { X } from '@primer/octicons-react';
+import { Flex, CloseButton } from '../components/lib/utils';
 
 import styled from 'styled-components';
 import { generateMobileCode, useInterval, getRemainingTime } from '../helpers';
@@ -21,22 +21,6 @@ const CodeList = ({ codes, onDelete, emptyComponent }) => {
         justify-content: space-between;
     `;
 
-    const DeleteButton = styled(Flex)`
-        width: auto;
-        justify-content: space-evenly;
-
-        border: 0px;
-        color: var(--accents-6);
-        background-color: inherit;
-
-        cursor: pointer;
-        transition: 0.2s;
-
-        :hover {
-            color: var(--error);
-        }
-    `;
-
     const Code = styled.code`
         font-size: 1.3em;
         letter-spacing: 1.5px;
@@ -53,9 +37,9 @@ const CodeList = ({ codes, onDelete, emptyComponent }) => {
                         <ItemRow>
                             <Alias>{alias}</Alias>
 
-                            <DeleteButton as='button' onClick={() => onDelete(alias)}>
+                            <CloseButton as='button' onClick={() => onDelete(alias)}>
                                 <Octicon icon={X} verticalAlign='middle' />
-                            </DeleteButton>
+                            </CloseButton>
                         </ItemRow>
 
                         <ItemRow>

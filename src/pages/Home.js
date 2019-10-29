@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import Login from '../components/Login';
 import SecretInput from '../components/SecretInput';
 import { UpdatingCodeList } from '../components/CodeList';
-import { Card, Label, RunningText, VerticalSpacer } from '../components/lib/utils';
+import {
+    Card, APIError, Label, RunningText, VerticalSpacer
+} from '../components/lib/utils';
 
 import { API, LocalSecretStore } from '../helpers';
 
@@ -31,6 +33,8 @@ const Home = () => {
     const [ onlineList, setOnlineList ] = useState([]);
     const [ token, setToken ] = useState(sessionStorage.getItem('token') || null);
 
+    const [ apiError, setApiError ] = useState(null);
+
     const onLocalSecretSave = (item) => {
         setLocalList((prev) => prev.concat([ item ]));
         LocalSecretStore.add(item.alias, item.secret);
@@ -52,6 +56,8 @@ const Home = () => {
             setOnlineList(await API.getSecrets(token, password));
         } catch (err) {
             console.error('getSecrets', err);
+
+            setApiError(err);
         }
     };
 
@@ -80,6 +86,8 @@ const Home = () => {
 
             {token ? (
                 <>
+                    {apiError ? <APIError error={apiError} /> : <></>}
+
                     <Label><b>Online secrets</b> (
                         <a href='!#' onClick={onLogout}>Logout</a>
                     )</Label>
