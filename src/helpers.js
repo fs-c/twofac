@@ -1,6 +1,9 @@
 import { useRef, useEffect } from 'react';
 
+import axios from 'axios';
 import totp from 'steam-totp';
+
+import { resourceServer } from './.config';
 
 export function getBaseName() {
 	const { PUBLIC_URL } = process.env;
@@ -84,3 +87,83 @@ export class LocalSecretStore {
         localStorage.removeItem(LocalSecretStore.prefix + alias);
     }
 }
+
+export class API {
+    static baseUri = `${resourceServer.uri}:${resourceServer.port}`;
+
+    static handle(err) {
+        if (err.userError) {
+            throw err;
+        } else if (err.response) {
+            console.error(err.response);
+
+            if (err.response.data) {
+                throw new API.Error(err.response.data.status.message);
+            }
+
+            throw new API.Error('Request failed: ' + err.response.statusText);
+        } else if (err.request) {
+            console.error('No response', err.request);
+
+            throw new API.Error('Response timeout', 'Please try again later');
+        } else {
+            console.error(err);
+
+            throw new API.Error('Internal error',
+                'Please feel free to file an issue on github');
+        }
+    }
+
+    static async login(username, password) {
+        try {
+            const { data } = await axios.post(`${API.baseUri}/signin`, {
+                username, password,
+            });
+
+            console.log('Login', data);
+
+            if (!data.token) {
+                throw new Error('Malformed response');
+            }
+
+            const { token } = data;
+
+            sessionStorage.setItem('token', token);
+            return token;
+        } catch (err) {
+            API.handle(err);
+        }
+    }
+
+    static logout() {
+        sessionStorage.removeItem('token');
+    }
+
+    static async getSecrets(token, password) {
+        try {
+            const { data } = await axios.post(`${API.baseUri}/secrets/get`, {
+                password
+            }, { headers: { 'Authorization': 'Bearer ' + token } });
+
+            console.log('Get secrets', data);
+
+            if (!data.secrets) {
+                throw new Error('Malformed response');
+            }
+
+            return data.secrets;
+        } catch (err) {
+            API.handle(err);
+        }
+    }
+}
+
+API.Error = class extends Error {
+    userError = true;
+
+    constructor(message, details = null) {
+        super(message);
+
+        this.details = details;
+    };
+};
