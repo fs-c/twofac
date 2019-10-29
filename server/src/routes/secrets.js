@@ -18,10 +18,11 @@ module.exports = async (fastify, opts) => {
 
         const decrypted = [];
         for (const secret of fastify.account.secrets) {
-            decrypted.push(await decipher(
-                secret.raw, req.body.password, secret.salt,
-                secret.vector,
-            ));
+            decrypted.push({
+                alias: secret.alias,
+                secret: await decipher(secret.raw, req.body.password,
+                    secret.salt, secret.vector),
+            });
         }
 
         delete req.body.password;
