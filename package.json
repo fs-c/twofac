@@ -6,10 +6,10 @@
     "@primer/octicons-react": "^9.2.0",
     "axios": "^0.19.0",
     "cross-env": "^5.2.1",
-    "react": "^16.9.0",
+    "react": "^16.11.0",
     "react-collapsed": "^2.2.2",
-    "react-dom": "^16.9.0",
-    "react-scripts": "^3.1.1",
+    "react-dom": "^16.11.0",
+    "react-scripts": "^3.2.0",
     "steam-totp": "^2.1.1",
     "styled-components": "^4.4.0",
     "wouter": "^2.3.1"
