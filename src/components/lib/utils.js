@@ -22,10 +22,16 @@ export const Label = styled.small`
     font-size: 80%;
     padding: 0.3em 0;
     color: var(--accents-6);
+
+    display: inline-block;
 `;
 
 export const RunningText = styled.p`
     color: var(--accents-7);
+`;
+
+export const CenteredText = styled.p`
+    text-align: center;
 `;
 
 export const Error = styled.div`
@@ -37,4 +43,11 @@ export const Error = styled.div`
     & span {
         color: var(--accents-6);
     }
+`;
+
+export const Card = styled.div`
+    padding: 1em;
+    border-radius: 5px;
+    color: var(--accents-6);
+    border: 1px solid var(--accents-6);
 `;
