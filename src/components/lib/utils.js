@@ -50,7 +50,7 @@ const StyledError = styled.div`
     }
 `;
 
-export const CloseButton = styled(Flex)`
+export const IconButton = styled(Flex)`
     width: auto;
     padding: 0;
     justify-content: space-evenly;
@@ -61,7 +61,9 @@ export const CloseButton = styled(Flex)`
 
     cursor: pointer;
     transition: 0.2s;
+`;
 
+export const CloseButton = styled(IconButton)`
     :hover {
         color: var(--error);
     }
