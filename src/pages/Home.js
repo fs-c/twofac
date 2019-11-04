@@ -65,8 +65,6 @@ const Home = () => {
         const password = sessionStorage.getItem('password');
         const secret = LocalSecretStore.get(alias);
 
-        console.log({ password, secret });
-
         if (!password || !secret) {
             setApiError({ message: 'Internal error',
                 details: 'No secrets transmitted' });

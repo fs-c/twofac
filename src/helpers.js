@@ -126,8 +126,6 @@ export class API {
                 username, password,
             });
 
-            console.log('Login', data);
-
             if (!data.token) {
                 throw new Error('Malformed response');
             }
@@ -151,8 +149,6 @@ export class API {
                 password
             }, { headers: { 'Authorization': 'Bearer ' + token } });
 
-            console.log('Get secrets', data);
-
             if (!data.secrets) {
                 throw new Error('Malformed response');
             }
@@ -169,8 +165,6 @@ export class API {
                 password, secret, alias,
             }, { headers: { 'Authorization': 'Bearer ' + token } });
 
-            console.log('Add secret', data);
-
             return data;
         } catch (err) {
             API.handle(err);
@@ -185,8 +179,6 @@ export class API {
                 data: { alias },
                 headers: { 'Authorization': 'Bearer ' + token },
             });
-
-            console.log('Delete secret', data);
 
             return data;
         } catch (err) {
