@@ -13,14 +13,6 @@ const links = {
     steamGuard: 'https://support.steampowered.com/kb_article.php?ref=8625-wrah-9030',
 };
 
-const EmptyLocalList = (
-    <Card>
-        <b>Your local secrets appear here</b><br />
-        <Label>After adding some and signing in below, you'll be able to move 
-        them to the server</Label>
-    </Card>
-);
-
 const EmptyOnlineList = (
     <Card>
         <b>Your online secrets appear here</b><br />
@@ -124,6 +116,14 @@ const Home = () => {
         await API.logout();
         setToken(null);
     };
+
+    const EmptyLocalList = (
+        <Card>
+            <b>Your local secrets appear here</b><br />
+            <Label>After adding some{token ? '' : ' and signing in below'}, you'll be able to move 
+            them to the server</Label>
+        </Card>
+    );
 
     return (
         <>
