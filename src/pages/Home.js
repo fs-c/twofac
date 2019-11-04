@@ -76,16 +76,16 @@ const Home = () => {
 
         try {
             await API.saveSecret(token, password, alias, secret);
+
+            LocalSecretStore.remove(alias);
+
+            setLocalList(LocalSecretStore.getAll());
+            setOnlineList(await API.getSecrets(token, password));
         } catch (err) {
             console.error('saveSecret', err);
 
             setApiError(err);
         }
-
-        LocalSecretStore.remove(alias);
-
-        setLocalList(LocalSecretStore.getAll());
-        setOnlineList(await API.getSecrets(token, password));
     };
 
     const onOnlineSecretDelete = async (alias) => {
