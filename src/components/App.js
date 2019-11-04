@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Header from './Header';
 import Footer from './Footer';
@@ -14,21 +14,39 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
     :root {
-        --background: #000000;
-        --foreground: #ffffff;
-
-        --accents-8: #fafafa;
-        --accents-7: #eaeaea;
-        --accents-6: #999999;
-        --accents-5: #888888;
-        --accents-4: #666666;
-        --accents-3: #444444;
-        --accents-2: #333333;
-        --accents-1: #111111;
-
         --error: #E60000;
         --highlight: #FF0080;
     }
+
+    ${({ theme }) => theme === 'light' ? (`
+        :root {
+            --background: #ffffff;
+            --foreground: #000000;
+
+            --accents-1: #fafafa;
+            --accents-2: #eaeaea;
+            --accents-3: #999999;
+            --accents-4: #888888;
+            --accents-5: #666666;
+            --accents-6: #444444;
+            --accents-7: #333333;
+            --accents-8: #111111;
+        }
+    `) : (`
+        :root {
+            --background: #000000;
+            --foreground: #ffffff;
+
+            --accents-8: #fafafa;
+            --accents-7: #eaeaea;
+            --accents-6: #999999;
+            --accents-5: #888888;
+            --accents-4: #666666;
+            --accents-3: #444444;
+            --accents-2: #333333;
+            --accents-1: #111111;
+        }
+    `)}
 
     ::selection {
         background-color: var(--highlight);
@@ -42,6 +60,9 @@ const GlobalStyle = createGlobalStyle`
         min-height: 100vh;
 
         padding: 0 1em 0 1em;
+
+        /* For the theme switch */
+        transition: 0.25s;
     }
 
     * { outline-color: var(--highlight); }
@@ -65,25 +86,39 @@ const GlobalContainer = styled(Container)`
     min-height: inherit;
 `;
 
-const App = () => (
-    <>
-        <CSSReset />
-        <GlobalStyle />
+const App = () => {
+    const [ theme, setTheme ] = useState(localStorage.getItem('theme') || 'light');
 
-        <GlobalContainer>
-            <Header />
+    const onThemeSwitch = () => {
+        setTheme((t) => {
+            const newTheme = t === 'light' ? 'dark' : 'light';
 
-            <Switch>
-                <Route path='/' component={Home} />
-                <Route path='/what' component={What} />
-                <Route path='/contact' component={Contact} />
+            localStorage.setItem('theme', newTheme);
 
-                <Route path='/:nonexistent*'><Redirect to='/' /></Route>
-            </Switch>
+            return newTheme;
+        });
+    };
 
-            <Footer />
-        </GlobalContainer>
-    </>
-);
+    return (
+        <>
+            <CSSReset />
+            <GlobalStyle theme={theme} />
+    
+            <GlobalContainer>
+                <Header onThemeSwitch={onThemeSwitch} />
+    
+                <Switch>
+                    <Route path='/' component={Home} />
+                    <Route path='/what' component={What} />
+                    <Route path='/contact' component={Contact} />
+    
+                    <Route path='/:nonexistent*'><Redirect to='/' /></Route>
+                </Switch>
+    
+                <Footer />
+            </GlobalContainer>
+        </>
+    );
+};
 
 export default App;

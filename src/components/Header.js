@@ -1,9 +1,18 @@
 import React from 'react';
 
 import Navigation from './lib/Navigation';
-import { VerticalSpacer } from './lib/utils';
+import { IconButton, VerticalSpacer } from './lib/utils';
+import Octicon, { LightBulb } from '@primer/octicons-react';
 
-const Header = () => (
+import styled from 'styled-components';
+
+const LightSwitch = styled(IconButton)`
+    :hover {
+        color: var(--foreground);
+    }
+`;
+
+const Header = ({ onThemeSwitch }) => (
     <>
         <VerticalSpacer height={5} />
 
@@ -12,6 +21,9 @@ const Header = () => (
             <Navigation.Divider />
             <Navigation.Item href='/what?'>/what?</Navigation.Item>
             <Navigation.Item href='/contact'>/contact</Navigation.Item>
+            <Navigation.Item onClick={onThemeSwitch}>
+                <LightSwitch><Octicon icon={LightBulb} /></LightSwitch>
+            </Navigation.Item>
         </Navigation>
 
         <VerticalSpacer height={4} />
