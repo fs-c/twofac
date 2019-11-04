@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Login from '../components/Login';
 import SecretInput from '../components/SecretInput';
@@ -35,6 +35,22 @@ const Home = () => {
 
     const [ apiError, setApiError ] = useState(null);
 
+    useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        const password = sessionStorage.getItem('password');
+
+        if (!token || !password)
+            return;
+
+        (async () => {
+            try {
+                setOnlineList(await API.getSecrets(token, password));
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+    }, [setOnlineList]);
+
     const onLocalSecretSave = (item) => {
         setLocalList((prev) => prev.concat([ item ]));
         LocalSecretStore.add(item.alias, item.secret);
@@ -45,12 +61,57 @@ const Home = () => {
         LocalSecretStore.remove(alias);
     };
 
-    const onOnlineSecretDelete = (alias) => {
-        console.warn('stub');
+    const onLocalSecretUpload = async (alias) => {
+        const password = sessionStorage.getItem('password');
+        const secret = LocalSecretStore.get(alias);
+
+        console.log({ password, secret });
+
+        if (!password || !secret) {
+            setApiError({ message: 'Internal error',
+                details: 'No secrets transmitted' });
+            
+            return;
+        }
+
+        try {
+            await API.saveSecret(token, password, alias, secret);
+        } catch (err) {
+            console.error('saveSecret', err);
+
+            setApiError(err);
+        }
+
+        LocalSecretStore.remove(alias);
+
+        setLocalList(LocalSecretStore.getAll());
+        setOnlineList(await API.getSecrets(token, password));
+    };
+
+    const onOnlineSecretDelete = async (alias) => {
+        try {
+            await API.deleteSecret(token, alias);
+        } catch (err) {
+            console.error('deleteSecret', err);
+
+            setApiError(err);
+        }
+
+        const password = sessionStorage.getItem('password');
+
+        if (!password) {
+            setApiError({ message: 'Internal error' });
+
+            return;
+        }
+
+        setOnlineList(await API.getSecrets(token, password));
     };
 
     const onLogin = async (token, password) => {
         setToken(token);
+        // TODO: This is very suboptimal
+        sessionStorage.setItem('password', password);
 
         try {
             setOnlineList(await API.getSecrets(token, password));
@@ -80,13 +141,18 @@ const Home = () => {
             <VerticalSpacer height={4} />
 
             <UpdatingCodeList list={localList} onDelete={onLocalSecretDelete}
-                emptyComponent={EmptyLocalList} />
+                emptyComponent={EmptyLocalList}
+                onUpload={token ? onLocalSecretUpload : null} />
 
             <VerticalSpacer height={4} />
 
             {token ? (
                 <>
-                    {apiError ? <APIError error={apiError} /> : <></>}
+                    {apiError ? <>
+                        <APIError error={apiError} />
+
+                        <VerticalSpacer height={3} />
+                    </> : <></>}
 
                     <Label><b>Online secrets</b> (
                         <a href='!#' onClick={onLogout}>Logout</a>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 import List from '../components/lib/List';
-import Octicon, { X } from '@primer/octicons-react';
-import { Flex, CloseButton } from '../components/lib/utils';
+import Octicon, { X, CloudUpload } from '@primer/octicons-react';
+import { Flex, IconButton, CloseButton } from '../components/lib/utils';
 
 import styled from 'styled-components';
 import { generateMobileCode, useInterval, getRemainingTime } from '../helpers';
@@ -12,7 +12,7 @@ const generateCodeTuple = (secret) => ({
     current: generateMobileCode(secret),
 });
 
-const CodeList = ({ codes, onDelete, emptyComponent }) => {
+const CodeList = ({ codes, onDelete, onUpload, emptyComponent }) => {
     const Alias = styled.span`
         color: var(--accents-6);
     `;
@@ -27,7 +27,36 @@ const CodeList = ({ codes, onDelete, emptyComponent }) => {
         color: var(--${({ main }) => main ? 'foreground' : 'accents-6'});
     `;
 
+    const MoveButton = styled(IconButton)`
+        :not(:last-child) {
+            margin-right: 0.5em;
+        }
+
+        :hover {
+            color var(--accents-7);
+        }
+    `;
+
     const aliases = Object.keys(codes);
+
+    const SideButtons = ({ alias }) => (
+        <div>
+            <Flex direction='row'>
+                {onUpload ? (
+                    <MoveButton as='button' onClick={() => onUpload(alias)}>
+                        <Octicon icon={CloudUpload}
+                            verticalAlign='middle' />
+                    </MoveButton>
+                ) : (<></>)}
+
+                <CloseButton onClick={() => onDelete(alias)}
+                    as='button'
+                >
+                    <Octicon icon={X} verticalAlign='middle' />
+                </CloseButton>
+            </Flex>
+        </div>
+    );
 
     return (
         aliases.length ? (
@@ -37,9 +66,7 @@ const CodeList = ({ codes, onDelete, emptyComponent }) => {
                         <ItemRow>
                             <Alias>{alias}</Alias>
 
-                            <CloseButton as='button' onClick={() => onDelete(alias)}>
-                                <Octicon icon={X} verticalAlign='middle' />
-                            </CloseButton>
+                            <SideButtons alias={alias} />
                         </ItemRow>
 
                         <ItemRow>
@@ -62,7 +89,7 @@ const CodeList = ({ codes, onDelete, emptyComponent }) => {
     );
 };
 
-export const UpdatingCodeList = ({ list, onDelete, emptyComponent }) => {
+export const UpdatingCodeList = ({ list, onDelete, onUpload, emptyComponent }) => {
     const [ codes, setCodes ] = useState({});
 
     const generateCodes = (list) => list.reduce((acc, cur) => {
@@ -83,7 +110,7 @@ export const UpdatingCodeList = ({ list, onDelete, emptyComponent }) => {
     }, 1000);
 
     return (
-        <CodeList codes={codes} onDelete={onDelete}
+        <CodeList codes={codes} onDelete={onDelete} onUpload={onUpload}
             emptyComponent={emptyComponent} />
     );
 };

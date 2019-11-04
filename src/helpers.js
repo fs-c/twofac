@@ -76,6 +76,8 @@ export class LocalSecretStore {
     }
 
     static get(alias) {
+        console.log(LocalSecretStore.prefix + alias, alias);
+
         return localStorage.getItem(LocalSecretStore.prefix + alias);
     }
 
@@ -89,6 +91,10 @@ export class LocalSecretStore {
 }
 
 export class API {
+    // TODO:
+    //  - request abstraction
+    //  - switch to taking an object as single argument
+
     static baseUri = `${resourceServer.uri}:${resourceServer.port}`;
 
     static handle(err) {
@@ -152,6 +158,37 @@ export class API {
             }
 
             return data.secrets;
+        } catch (err) {
+            API.handle(err);
+        }
+    }
+
+    static async saveSecret(token, password, alias, secret) {
+        try {
+            const { data } = await axios.post(`${API.baseUri}/secrets/add`, {
+                password, secret, alias,
+            }, { headers: { 'Authorization': 'Bearer ' + token } });
+
+            console.log('Add secret', data);
+
+            return data;
+        } catch (err) {
+            API.handle(err);
+        }
+    }
+
+    static async deleteSecret(token, alias) {
+        console.log({ token, alias });
+
+        try {
+            const { data } = await axios.delete(`${API.baseUri}/secrets/delete`, {
+                data: { alias },
+                headers: { 'Authorization': 'Bearer ' + token },
+            });
+
+            console.log('Delete secret', data);
+
+            return data;
         } catch (err) {
             API.handle(err);
         }
