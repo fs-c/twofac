@@ -5,7 +5,7 @@ const Input = styled.input`
     flex-grow: 1;
     padding: 0.4em 0.7em;
 
-    min-width: 0!important;
+    min-width: 0;
 
     font-size: 1rem;
     line-height: 1.5;
