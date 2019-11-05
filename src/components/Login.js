@@ -21,7 +21,7 @@ const Login = ({ onLogin }) => {
 
     const handleLogin = async () => {
         try {
-            const token = await API.login(username, password);
+            const token = await API.auth(username, password);
 
             setError(null);
             onLogin(token, password);
