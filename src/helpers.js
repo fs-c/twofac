@@ -122,7 +122,7 @@ export class API {
 
     static async login(username, password) {
         try {
-            const { data } = await axios.post(`${API.baseUri}/signin`, {
+            const { data } = await axios.post(`${API.baseUri}/auth/signin`, {
                 username, password,
             });
 
