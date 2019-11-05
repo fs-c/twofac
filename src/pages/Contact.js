@@ -4,6 +4,7 @@ import { RunningText } from '../components/lib/utils';
 
 const links = {
     email: 'mailto:root@fsoc.space',
+    github: 'https://github.com/LW2904/twofac/issues/new',
     steam: 'http://steamcommunity.com/profiles/76561198091491690',
 };
 
@@ -16,8 +17,7 @@ const Contact = () => (
 
         <RunningText>
             For bug reports, feature requests and general questions or contributions, 
-            please <a href='https://github.com/LW2904/twofac/issues/new'>submit an 
-            issue</a> on github. 
+            please <a href={links.github}>submit an issue</a> on github. 
         </RunningText>
     </>
 );
