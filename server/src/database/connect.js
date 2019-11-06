@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const connect = exports.connect = (options) => {
-	const { MONGODB_NAME, MONGODB_PASSWORD } = process.env;
+const connect = exports.connect = () => {
+	const { MONGODB_URI, MONGODB_NAME, MONGODB_PASSWORD } = process.env;
 	const uri = `mongodb+srv://${MONGODB_NAME}:${MONGODB_PASSWORD}@`
-        + options.connectString;
+        + MONGODB_URI;
         
 	return mongoose.connect(uri, {
         useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true,

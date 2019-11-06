@@ -1,9 +1,6 @@
 require('dotenv').config();
 
 const inProd = exports.inProd = process.env.NODE_ENV === 'production';
-const config = require(`../../src/config.${
-    inProd ? 'production' : 'development'
-}`);
 
 const log = exports.log = require('pino')(inProd ? {
     level: 'info',
@@ -29,8 +26,7 @@ fastify.register(require('fastify-cors'), {
     origin: true,
 });
 
-fastify.register(require('./database').connector,
-    config.resourceServer.mongoDB);
+fastify.register(require('./database').connector);
 
 fastify.register(require('./crypto').authenticate);
 
