@@ -17,16 +17,13 @@ const validate = exports.validate = async (plain, hashed) => {
     if (!(await hash.verify(hashed, plain))) {
         throw new UserError('Invalid information', 400);
     }
-}
+};
 
 const authenticate = exports.authenticate = fp(async (fastify, opts) => {
-    if (!process.env.JWT_SECRET) {
-        throw new Error('JWT_SECRET env not provided');
-    }
+    const secret = process.env.JWT_SECRET
+        || crypto.randomBytes(32).toString('base64');
 
-    fastify.register(require('fastify-jwt'), {
-        secret: process.env.JWT_SECRET,
-    });
+    fastify.register(require('fastify-jwt'), { secret });
 
     fastify.decorate('user', {});
     fastify.decorate('account', {});
