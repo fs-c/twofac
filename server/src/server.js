@@ -50,7 +50,7 @@ fastify.setNotFoundHandler(async (req, res) => {
     });
 });
 
-const prefix = process.env.PREFIX || config.resourceServer.prefix || '';
+const prefix = process.env.PREFIX || '';
 
 if (prefix !== '') {
     fastify.log.debug('setting up routes with prefix', prefix);
@@ -58,7 +58,7 @@ if (prefix !== '') {
 
 fastify.register(require('./routes'), { prefix });
 
-const port = process.env.PORT || config.resourceServer.port || 8000;
+const port = process.env.PORT || 8000;
 fastify.listen(port, (err) => {
     if (err) {
         fastify.log.trace(err);
