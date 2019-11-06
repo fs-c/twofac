@@ -3,8 +3,6 @@ import { useRef, useEffect } from 'react';
 import axios from 'axios';
 import totp from 'steam-totp';
 
-import { resourceServer } from './.config';
-
 export function getBaseName() {
 	const { PUBLIC_URL } = process.env;
 
@@ -95,7 +93,7 @@ export class API {
     //  - request abstraction
     //  - switch to taking an object as single argument
 
-    static baseUri = `${resourceServer.uri}:${resourceServer.port}`;
+    static baseUri = process.env.REACT_APP_API_URL;
 
     static handle(err) {
         if (err.userError) {
@@ -120,23 +118,37 @@ export class API {
         }
     }
 
-    static async auth(username, password) {
+    static async request(method, uri, requestData = {}, options = {}) {
+        const { token, required = [] } = options;
+
         try {
-            const { data } = await axios.post(`${API.baseUri}/auth/universal`, {
-                username, password,
+            const { data } = await axios({
+                method, data: requestData,
+                url: `${API.baseUri}/${uri}`,
+                headers: token ? { 'Authorization': 'Bearer ' + token } : {},
             });
 
-            if (!data.token) {
-                throw new Error('Malformed response');
+            for (const requirement of required) {
+                if (!data[requirement]) {
+                    throw new Error('Malformed response');
+                }
             }
 
-            const { token } = data;
-
-            sessionStorage.setItem('token', token);
-            return token;
+            return data;
         } catch (err) {
             API.handle(err);
         }
+    }
+
+    static async auth(username, password) {
+        const data = await API.request('post', 'auth/universal', {
+            username, password,
+        }, { required: [ 'token' ] });
+
+        const { token } = data;
+
+        sessionStorage.setItem('token', token);
+        return token;
     }
 
     static logout() {
@@ -144,46 +156,27 @@ export class API {
     }
 
     static async getSecrets(token, password) {
-        try {
-            const { data } = await axios.post(`${API.baseUri}/secrets/get`, {
-                password
-            }, { headers: { 'Authorization': 'Bearer ' + token } });
+        const data = await API.request('post', 'secrets/get', {
+            password,
+        }, { token, required: [ 'secrets' ] });
 
-            if (!data.secrets) {
-                throw new Error('Malformed response');
-            }
-
-            return data.secrets;
-        } catch (err) {
-            API.handle(err);
-        }
+        return data.secrets;
     }
 
     static async saveSecret(token, password, alias, secret) {
-        try {
-            const { data } = await axios.post(`${API.baseUri}/secrets/add`, {
-                password, secret, alias,
-            }, { headers: { 'Authorization': 'Bearer ' + token } });
+        const data = await API.request('post', 'secrets/add', {
+            password, alias, secret,
+        }, { token });
 
-            return data;
-        } catch (err) {
-            API.handle(err);
-        }
+        return data;
     }
 
     static async deleteSecret(token, alias) {
-        console.log({ token, alias });
+        const data = await API.request('delete', 'secrets/delete', {
+            alias,
+        }, { token });
 
-        try {
-            const { data } = await axios.delete(`${API.baseUri}/secrets/delete`, {
-                data: { alias },
-                headers: { 'Authorization': 'Bearer ' + token },
-            });
-
-            return data;
-        } catch (err) {
-            API.handle(err);
-        }
+        return data;
     }
 }
 
