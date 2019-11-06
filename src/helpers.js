@@ -89,10 +89,6 @@ export class LocalSecretStore {
 }
 
 export class API {
-    // TODO:
-    //  - request abstraction
-    //  - switch to taking an object as single argument
-
     static baseUri = process.env.REACT_APP_API_URL;
 
     static handle(err) {
