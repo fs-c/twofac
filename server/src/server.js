@@ -1,7 +1,9 @@
 require('dotenv').config();
 
-const config = require('../../src/.config');
 const inProd = exports.inProd = process.env.NODE_ENV === 'production';
+const config = require(`../../src/config.${
+    inProd ? 'production' : 'development'
+}`);
 
 const log = exports.log = require('pino')(inProd ? {
     level: 'info',
