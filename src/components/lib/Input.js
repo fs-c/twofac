@@ -14,7 +14,7 @@ const Input = styled.input`
 
     outline: none;
     border-radius: 5px;
-    border: 1px solid var(--accents-6);
+    border: 1px solid var(--foreground);
 
     transition: 0.2s;
 

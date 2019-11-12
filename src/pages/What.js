@@ -20,7 +20,8 @@ const QA = ({ question, children }) => (
 );
 
 const Note = styled(Card)`
-    border-color: #F5A623;
+    border-color: var(--highlight);
+    color: var(--foreground);
 `;
 
 const What = () => (

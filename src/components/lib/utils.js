@@ -98,5 +98,5 @@ export const Card = styled.div`
     padding: 1em;
     border-radius: 5px;
     color: var(--accents-6);
-    border: 1px solid var(--accents-6);
+    border: 1px solid var(--foreground);
 `;

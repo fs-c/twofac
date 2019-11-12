@@ -14,15 +14,11 @@ const Button = styled.button`
 
     outline: none;
     border-radius: 5px;
-    border: 1px solid var(--accents-6);
+    border: 1px solid var(--foreground);
 
     transition: 0.2s;
 
-    :focus {
-        background-color: var(--accents-1);
-    }
-
-    :hover {
+    :focus, :hover {
         cursor: pointer;
         color: var(--accents-7);
         background-color: var(--accents-1);
