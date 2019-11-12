@@ -38,6 +38,18 @@ module.exports = async (fastify, opts) => {
         },
     }));
 
+    fastify.get('/version', {
+        schema: {
+            response: {
+                '2xx': { type: 'object', properties: { status: 'status#' } },
+                '4xx': 'error#',
+                '5xx': 'error#',
+            },
+        },
+    }, async (req, res) => ({
+        status: { success: true, message: require('../package.json').version },
+    }));
+
     fastify.register(require('./routes/auth'), { prefix: 'auth' });
     fastify.register(require('./routes/secrets'), { prefix: 'secrets' });
 };
