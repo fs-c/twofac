@@ -11,7 +11,7 @@ const LoginContainer = styled(Flex).attrs({ direction: 'column' })`
     padding: 1em;
     border-radius: 5px;
     color: var(--accents-6);
-    border: 1px solid var(--accents-6);
+    border: 2px solid var(--accents-6);
 `;
 
 const Login = ({ onLogin }) => {
