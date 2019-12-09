@@ -1,4 +1,4 @@
-### `twofac/server`
+## `twofac/server`
 
 Expects the following environment variables to be provided
 
