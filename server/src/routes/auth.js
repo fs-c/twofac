@@ -99,8 +99,6 @@ module.exports = async (fastify, opts) => {
         try {
             const user = await User.findOne({ name: req.body.username });
 
-            fastify.log.debug({ user });
-
             if (user) {
                 return await doSignIn(req, res, user);
             } else {
@@ -109,8 +107,8 @@ module.exports = async (fastify, opts) => {
         } catch (err) {
             return UserError.consolidate(
                 err, new UserError('Universal authentication error', 500,
-                    err.message)
-            )
+                    err.message),
+            );
         }
     });
 };

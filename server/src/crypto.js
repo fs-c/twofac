@@ -5,7 +5,7 @@ const { UserError } = require('./error');
 
 const argonOptions = { timeCost: 4 };
 
-const cipherKeySize = process.env.CIPHER_KEY_SIZE || 32; // 32 Bytes == 256 Bit
+const cipherKeySize = process.env.CIPHER_KEY_SIZE || 32; // 256 Bit
 const cipherAlgorithm = process.env.CIPHER_ALG || 'aes256';
 
 const hash = exports.hash = {
@@ -25,8 +25,12 @@ const authenticate = exports.authenticate = fp(async (fastify, opts) => {
 
     fastify.register(require('fastify-jwt'), { secret });
 
+    // Contains the username, decoded from the JWT token
     fastify.decorate('user', {});
+    // Contains the database record of the given user
     fastify.decorate('account', {});
+
+    // Sets user and account
     fastify.decorate('authenticate', async (req, res) => {
         try {
             fastify.user = await req.jwtVerify();
