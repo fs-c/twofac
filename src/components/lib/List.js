@@ -9,17 +9,11 @@ const ListItem = styled.li`
     padding: 1em;
     list-style-type: none;
 
-    border-top: 2px solid var(--foreground);
-    border-left: 2px solid var(--foreground);
-    border-right: 2px solid var(--foreground);
+    border-top: 2px solid var(--accents-7);
+    border-left: 2px solid var(--accents-7);
+    border-right: 2px solid var(--accents-7);
 
     background-color: ${({ active }) => active ? 'var(--accents-1)' : 'inherit'};
-
-    cursor: pointer;
-
-    :hover {
-        background-color: var(--accents-1);
-    }
 
     :first-child {
         border-radius: 5px 5px 0 0;
@@ -27,7 +21,7 @@ const ListItem = styled.li`
 
     :last-child {
         border-radius: 0 0 5px 5px;
-        border-bottom: 2px solid var(--foreground);
+        border-bottom: 2px solid var(--accents-7);
     }
 
     /* TODO: Solve more elegantly */

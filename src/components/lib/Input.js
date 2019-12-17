@@ -19,11 +19,12 @@ const Input = styled.input`
     transition: 0.2s;
 
     :focus {
-        border: 2px solid var(--accents-7);
+        border: 2px solid var(--foreground);
     }
 
     ::placeholder {
-        color: var(--foreground);
+        opacity: 1;
+        color: var(--accents-7);
     }
 `;
 
