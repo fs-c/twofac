@@ -9,12 +9,12 @@ const Button = styled.button`
     font-size: 1rem;
     line-height: 1.5;
     text-align: center;
-    color: var(--accents-6);
+    color: var(--accents-8);
     background-color: var(--background);
 
     outline: none;
     border-radius: 5px;
-    border: 1px solid var(--foreground);
+    border: 2px solid var(--foreground);
 
     transition: 0.2s;
 

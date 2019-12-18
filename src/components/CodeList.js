@@ -33,7 +33,7 @@ const CodeList = ({ codes, onDelete, onUpload, emptyComponent }) => {
         }
 
         :hover {
-            color var(--accents-7);
+            color #0366D6;
         }
     `;
 

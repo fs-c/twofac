@@ -14,16 +14,17 @@ const Input = styled.input`
 
     outline: none;
     border-radius: 5px;
-    border: 1px solid var(--foreground);
+    border: 2px solid var(--foreground);
 
     transition: 0.2s;
 
     :focus {
-        border: 1px solid var(--accents-7);
+        border: 2px solid var(--foreground);
     }
 
     ::placeholder {
-        color: var(--accents-6);
+        opacity: 1;
+        color: var(--accents-7);
     }
 `;
 
