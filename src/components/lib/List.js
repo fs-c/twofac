@@ -9,9 +9,9 @@ const ListItem = styled.li`
     padding: 1em;
     list-style-type: none;
 
-    border-top: 2px solid var(--accents-7);
-    border-left: 2px solid var(--accents-7);
-    border-right: 2px solid var(--accents-7);
+    border-top: 1px solid var(--accents-7);
+    border-left: 1px solid var(--accents-7);
+    border-right: 1px solid var(--accents-7);
 
     background-color: ${({ active }) => active ? 'var(--accents-1)' : 'inherit'};
 
@@ -21,7 +21,7 @@ const ListItem = styled.li`
 
     :last-child {
         border-radius: 0 0 5px 5px;
-        border-bottom: 2px solid var(--accents-7);
+        border-bottom: 1px solid var(--accents-7);
     }
 
     /* TODO: Solve more elegantly */

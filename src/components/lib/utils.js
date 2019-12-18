@@ -43,7 +43,7 @@ const StyledError = styled.div`
     padding: 0.5em 0.8em 0.5em 0.8em;
     border-radius: 5px;
     color: var(--accents-7);
-    border: 2px solid var(--error);
+    border: 1px solid var(--error);
 
     & span {
         color: var(--accents-6);
@@ -98,5 +98,5 @@ export const Card = styled.div`
     padding: 1em;
     border-radius: 5px;
     color: var(--accents-6);
-    border: 2px solid var(--foreground);
+    border: 1px solid var(--foreground);
 `;

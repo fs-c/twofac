@@ -14,12 +14,12 @@ const Input = styled.input`
 
     outline: none;
     border-radius: 5px;
-    border: 2px solid var(--foreground);
+    border: 1px solid var(--foreground);
 
     transition: 0.2s;
 
     :focus {
-        border: 2px solid var(--foreground);
+        border: 1px solid var(--foreground);
     }
 
     ::placeholder {

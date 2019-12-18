@@ -30,7 +30,7 @@ const NavigationMain = styled(NavigationItem)`
     transform: skew(-5deg);
     padding: 0 0.3em 0 0.3em;
     box-shadow: 4px 4px var(--highlight);
-    border: 2px solid var(--foreground);
+    border: 1px solid var(--foreground);
 
     font-weight: bolder;
     text-decoration: none;
