@@ -74,7 +74,7 @@ export class LocalSecretStore {
     }
 
     static get(alias) {
-        console.log(LocalSecretStore.prefix + alias, alias);
+        console.log('local secret store get', LocalSecretStore.prefix + alias, alias);
 
         return localStorage.getItem(LocalSecretStore.prefix + alias);
     }
@@ -97,7 +97,7 @@ export class API {
         } else if (err.response) {
             console.error(err.response);
 
-            if (err.response.data) {
+            if (err.response.data && err.response.data.status) {
                 throw new API.Error(err.response.data.status.message);
             }
 
@@ -126,7 +126,7 @@ export class API {
 
             for (const requirement of required) {
                 if (!data[requirement]) {
-                    throw new Error('Malformed response');
+                    throw new Error('Malformed response, missing ' + requirement);
                 }
             }
 

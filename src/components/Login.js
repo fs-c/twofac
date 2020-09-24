@@ -26,7 +26,7 @@ const Login = ({ onLogin }) => {
             setError(null);
             onLogin(token, password);
         } catch (err) {
-            setError(err);
+            setError(err.message ? err : { message: 'Something went wrong' });
         }
     };
 

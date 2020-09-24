@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const argon2 = require('argon2');
-const fp = require('fastify-plugin');
 const { UserError } = require('./error');
+const jsonwebtoken = require('jsonwebtoken');
 
 const argonOptions = { timeCost: 4 };
 
@@ -18,36 +18,6 @@ const validate = exports.validate = async (plain, hashed) => {
         throw new UserError('Invalid information', 400);
     }
 };
-
-const authenticate = exports.authenticate = fp(async (fastify, opts) => {
-    const secret = process.env.JWT_SECRET
-        || crypto.randomBytes(32).toString('base64');
-
-    fastify.register(require('fastify-jwt'), { secret });
-
-    // Contains the username, decoded from the JWT token
-    fastify.decorate('user', {});
-    // Contains the database record of the given user
-    fastify.decorate('account', {});
-
-    // Sets user and account
-    fastify.decorate('authenticate', async (req, res) => {
-        try {
-            fastify.user = await req.jwtVerify();
-            fastify.account = await fastify.database.User.findOne({
-                name: fastify.user.name
-            });
-
-            if (!fastify.account) {
-                throw new UserError('User not found');
-            }
-        } catch (err) {
-            throw UserError.consolidate(
-                err, new UserError('Invalid token', 403, err.message),
-            );
-        }
-    });
-});
 
 const derive = (password, salt, size = cipherKeySize) =>    
     argon2.hash(password, { ...argonOptions, salt, hashLength: size, raw: true });
@@ -75,4 +45,13 @@ const decipher = exports.decipher = async (encrypted, password, salt, vector) =>
         + decipher.final('utf8');
 
     return decrypted;
+};
+
+const jwt = exports.jwt = {
+    // If JWT_TOKEN isn't given nothing works properly so don't provide a default.
+
+    sign: (payload) => jsonwebtoken.sign(payload, process.env.JWT_TOKEN, {
+        expiresIn: '2 days',
+    }),
+    verify: (token) => jsonwebtoken.verify(token, process.env.JWT_TOKEN),
 };

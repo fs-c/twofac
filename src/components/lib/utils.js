@@ -89,7 +89,7 @@ export const Error = ({ children, onClose }) => (
 
 export const APIError = ({ error, onClose }) => (
     <Error onClose={onClose}>
-        <b>{error.message}</b>
+        <b>{error.message || 'Something went wrong'}</b>
         {error.details && <span><br />{error.details}</span>}
     </Error>
 );
