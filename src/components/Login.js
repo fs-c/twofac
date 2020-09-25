@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Input from './lib/Input';
 import Button from './lib/Button';
-import { Flex, Label, Error, VerticalSpacer } from './lib/utils';
+import { Flex, Label, APIError, VerticalSpacer } from './lib/utils';
 
 import { API } from '../helpers';
 import styled from 'styled-components';
@@ -34,10 +34,8 @@ const Login = ({ onLogin }) => {
         <LoginContainer>
             {error && (
                 <>
-                    <Error onClose={() => setError(null)}>
-                        <b>{error.message}</b>
-                        {error.details && <span><br />{error.details}</span>}
-                    </Error>
+                    <APIError onClose={() => setError(null)} message={error.message}
+                        details={error.details} />
 
                     <VerticalSpacer height={3} />
                 </>
