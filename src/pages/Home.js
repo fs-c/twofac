@@ -148,7 +148,8 @@ const Home = () => {
             {token ? (
                 <>
                     {apiError ? <>
-                        <APIError message={apiError.message} details={apiError.details} />
+                        <APIError message={apiError.message} details={apiError.details}
+                            onClose={() => setApiError(null)} />
 
                         <VerticalSpacer height={3} />
                     </> : <></>}
