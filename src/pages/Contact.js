@@ -4,7 +4,7 @@ import { RunningText } from '../components/lib/utils';
 
 const links = {
     email: 'mailto:root@fsoc.space',
-    github: 'https://github.com/LW2904/twofac/issues/new',
+    github: 'https://github.com/fs-c/twofac/issues/new',
     steam: 'http://steamcommunity.com/profiles/76561198091491690',
 };
 

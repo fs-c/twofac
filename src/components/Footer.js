@@ -19,6 +19,6 @@ const Footer = styled.footer`
 export default () => (
     <Footer>
         Provided for free and fun by <a href='https://fsoc.space'>fsoc</a>.<br />
-        Find the code on <a href='https://github.com/LW2904/twofac'>github</a>.
+        Find the code on <a href='https://github.com/fs-c/twofac'>github</a>.
     </Footer>
 );
