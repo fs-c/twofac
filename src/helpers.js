@@ -92,25 +92,24 @@ export class API {
     static baseUri = process.env.REACT_APP_API_URL;
 
     static handle(err) {
-        if (err.userError) {
+        if (err.isApiError) {
             throw err;
         } else if (err.response) {
             console.error(err.response);
 
             if (err.response.data && err.response.data.status) {
-                throw new API.Error(err.response.data.status.message);
+                throw new API.Error('Request failed', err.response.data.status.message);
             }
 
-            throw new API.Error('Request failed: ' + err.response.statusText);
+            throw new API.Error('Request failed', err.response.statusText);
         } else if (err.request) {
             console.error('No response', err.request);
 
-            throw new API.Error('Response timeout', 'Please try again later');
+            throw new API.Error('Response timeout', 'Please try again later.');
         } else {
             console.error(err);
 
-            throw new API.Error('Internal error',
-                'Please feel free to file an issue on github');
+            throw new API.Error('Internal error', 'Could not handle error.');
         }
     }
 
@@ -126,7 +125,8 @@ export class API {
 
             for (const requirement of required) {
                 if (!data[requirement]) {
-                    throw new Error('Malformed response, missing ' + requirement);
+                    throw new API.Error('Malformed response',
+                        `Missing required property '${required}'.`);
                 }
             }
 
@@ -177,7 +177,7 @@ export class API {
 }
 
 API.Error = class extends Error {
-    userError = true;
+    isApiError = true;
 
     constructor(message, details = null) {
         super(message);

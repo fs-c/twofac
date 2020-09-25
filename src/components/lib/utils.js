@@ -87,10 +87,14 @@ export const Error = ({ children, onClose }) => (
     </>
 );
 
-export const APIError = ({ error, onClose }) => (
+export const APIError = ({ message, details, onClose }) => (
     <Error onClose={onClose}>
-        <b>{error.message || 'Something went wrong'}</b>
-        {error.details && <span><br />{error.details}</span>}
+        <span style={{ fontWeight: details ? 'bold' : 'normal' }}>
+            {message || 'Something went wrong'}
+        </span>
+        {details && <span><br />{details}</span> }
+        If the issue persists, please file an issue 
+        on <a href='https://github.com/fs-c/twofac/issues'>github</a>.
     </Error>
 );
 

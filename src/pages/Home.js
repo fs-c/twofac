@@ -74,7 +74,7 @@ const Home = () => {
         } catch (err) {
             console.error('saveSecret', err);
 
-            setApiError(err);
+            setApiError(err.isApiError ? err : { message: 'Internal error' });
         }
     };
 
@@ -90,7 +90,8 @@ const Home = () => {
         const password = sessionStorage.getItem('password');
 
         if (!password) {
-            setApiError({ message: 'Internal error' });
+            setApiError({ message: 'Internal error',
+                details: 'The secret was deleted but the list could not be refreshed.' });
 
             return;
         }
@@ -120,8 +121,8 @@ const Home = () => {
     const EmptyLocalList = (
         <Card>
             <b>Your local secrets appear here</b><br />
-            <Label>After adding some{token ? '' : ' and signing in below'}, you'll be able to move 
-            them to the server</Label>
+            <Label>After adding some{token ? '' : ' and signing in below'}, you'll 
+            be able to move  them to the server</Label>
         </Card>
     );
 
@@ -147,7 +148,7 @@ const Home = () => {
             {token ? (
                 <>
                     {apiError ? <>
-                        <APIError error={apiError} />
+                        <APIError message={apiError.message} details={apiError.details} />
 
                         <VerticalSpacer height={3} />
                     </> : <></>}
