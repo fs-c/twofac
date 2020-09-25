@@ -92,9 +92,7 @@ export const APIError = ({ message, details, onClose }) => (
         <span style={{ fontWeight: details ? 'bold' : 'normal' }}>
             {message || 'Something went wrong'}
         </span>
-        {details && <span><br />{details}</span> }
-        If the issue persists, please file an issue 
-        on <a href='https://github.com/fs-c/twofac/issues'>github</a>.
+        {details && <span><br />{details}</span>}
     </Error>
 );
 
