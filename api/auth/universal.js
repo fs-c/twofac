@@ -38,11 +38,11 @@ module.exports = async (req, res) => {
             res.json(await doSignUp(req, res));
         }
     } catch (err) {
-        console.log(err);
+        console.error(err);
 
-        res.status(500).json(UserError.consolidate(
+        res.status(500).json({ status: UserError.consolidate(
             err, new UserError('Universal authentication error', 500,
                 err.message),
-        ));
+        ) });
     }
 };
