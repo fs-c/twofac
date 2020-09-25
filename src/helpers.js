@@ -98,7 +98,11 @@ export class API {
             console.error(err.response);
 
             if (err.response.data && err.response.data.status) {
-                throw new API.Error('Request failed', err.response.data.status.message);
+                let message = err.response.data.status.message;
+                if (message[message.length - 1] !== '.')
+                    message += '.';
+
+                throw new API.Error('Request failed', message);
             }
 
             throw new API.Error('Request failed', err.response.statusText);
@@ -178,6 +182,7 @@ export class API {
 
 API.Error = class extends Error {
     isApiError = true;
+    isUsersFault = false;
 
     constructor(message, details = null) {
         super(message);
